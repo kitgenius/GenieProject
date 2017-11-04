@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-4.1.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
+
+	<import resource="classpath:spring-datasource.xml" />
+	<import resource="classpath:spring-hibernate.xml" />
+
+	<bean
+		class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+
+	<!-- spring注解 -->
+	<context:component-scan base-package="com.genie.service.*" />
+	<context:component-scan base-package="com.genie.dao.impl" />
+	<context:component-scan base-package="com.genie.hellotest"></context:component-scan>
+
+	<!-- spring aop事务管理 -->
+	<aop:config>
+		<!-- 切入点 -->
+		<aop:pointcut expression="execution(* com.genie.service.*.*(..))"
+			id="transactionPointcut" />
+		<!-- 在txAdvice切入点transactionAdvice应用txAdvice事务增强处理 -->
+		<aop:advisor advice-ref="transactionAdvice" pointcut-ref="transactionPointcut" />
+	</aop:config>
+
+</beans>

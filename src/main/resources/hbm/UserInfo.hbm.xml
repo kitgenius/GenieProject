@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-10-13 22:35:14 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="com.genie.entity.UserInfo" table="t_userinfo" catalog="geniedb" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="realName" type="string">
+            <column name="realName" length="50">
+                <comment>&#208;&#213;&#195;&#251;</comment>
+            </column>
+        </property>
+        <property name="personId" type="string">
+            <column name="personId" length="18">
+                <comment>&#201;&#237;&#183;&#221;&#214;&#164;</comment>
+            </column>
+        </property>
+        <property name="phone" type="string">
+            <column name="phone" length="14">
+                <comment>&#181;&#231;&#187;&#176;</comment>
+            </column>
+        </property>
+        <property name="sex" type="string">
+            <column name="sex" length="6">
+                <comment>&#208;&#212;&#177;&#240;</comment>
+            </column>
+        </property>
+        <property name="loginId" type="java.lang.Integer">
+            <column name="loginId">
+                <comment>&#181;&#199;&#194;&#189;id</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

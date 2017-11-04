@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script  type="text/javascript">
+	function submit() {
+		var fileName = document.getElementById('fileName').value;
+		var url = '/GenieProject/fileTest/download.do';
+		var downloadUrl = url
+		document.getElementById("downloadUrl").innerHTML = '<a href="/GenieProject/fileTest/download.do?fileName='
+				+ fileName + '">下载</a>';
+	}
+</script>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<!-- 下载 -->
+	<div id="download">
+		<p>输入下载文件名进行下载：
+		<p>
+			<input type="text" name="fileName" id="fileName" /> <input
+				type="button" value="提交" onclick="submit()">
+		<div id="downloadUrl"></div>
+	</div>
+	<p>
+	<p>
+	<p>
+
+		<!-- 上传 -->
+	<div id="upload">
+		<form action="/GenieProject/fileTest/upload.do" method="post"
+			enctype="multipart/form-data">
+			选择上传的文件进行上传：
+			<p>
+				<input type="file" name=file> <input type="submit"
+					value="上传">
+		</form>
+	</div>
+</body>
+
+</html>

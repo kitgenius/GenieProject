@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../config/ehcache.xsd"  updateCheck="false">
+	<diskStore path="ehcache/GenieProject" />
+	<!-- DefaultCache setting. -->
+     <defaultCache
+            maxElementsInMemory="1000"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            maxElementsOnDisk="1000000"
+            overflowToDisk="true" 
+            memoryStoreEvictionPolicy="LRU">
+            
+    </defaultCache>
+
+
+	<cache 
+		name="org.hibernate.cache.spi.UpdateTimestampsCache"
+	    maxElementsInMemory="5000" 
+	    eternal="true" 
+	    overflowToDisk="true" />
+	<cache 
+		name="org.hibernate.cache.internal.StandardQueryCache"
+	    maxElementsInMemory="10000" 
+	    eternal="false" 
+	    timeToLiveSeconds="120"
+	    overflowToDisk="true" />
+
+
+<!-- Special objects setting. -->	 
+	<!-- <cache 
+	     name="model.Folder"
+		 maxElementsInMemory="2"
+		 memoryStoreEvictionPolicy="LRU" 
+		 eternal="true" 
+		 diskPersistent="false"
+		 overflowToDisk="false" 
+		 maxElementsOnDisk="1000000" /> 
+
+	<cache 
+	     name="model.Service"
+		 maxElementsInMemory="2"
+		 memoryStoreEvictionPolicy="LRU" 
+		 eternal="true" 
+		 diskPersistent="false"
+		 overflowToDisk="false" 
+		 maxElementsOnDisk="1000000" /> 
+	 
+	<cache 
+	     name="model.Visit"
+		 maxElementsInMemory="2"
+		 memoryStoreEvictionPolicy="LRU" 
+		 eternal="true" 
+		 diskPersistent="false"
+		 overflowToDisk="false" 
+		 maxElementsOnDisk="1000000" /> 
+
+    <cache 
+	     name="model.ZfhfDepartment"
+		 maxElementsInMemory="2"
+		 memoryStoreEvictionPolicy="LRU" 
+		 eternal="true" 
+		 diskPersistent="false"
+		 overflowToDisk="false" 
+		 maxElementsOnDisk="1000000" /> --> 
+
+</ehcache>

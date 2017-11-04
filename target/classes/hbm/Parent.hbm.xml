@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-10-17 22:07:30 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="com.genie.entity.Parent" table="t_parent" catalog="geniedb" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="personId" type="string">
+        	<column name="personId" length="18"></column>
+        </property>
+        <property name="parentName" type="string">
+            <column name="parentName" length="50" />
+        </property>
+        <property name="sex" type="string">
+            <column name="sex" length="6" />
+        </property>
+        <property name="contactId" type="java.lang.Integer">
+            <column name="contactId" />
+        </property>
+        <set name="Childs" table="t_child" inverse="false" cascade="save-update" lazy="true" fetch="select">
+            <key>
+                <column name="parentId" not-null="true">
+                    <comment>&#184;&#184;&#196;&#184;id</comment>
+                </column>
+            </key>
+            <one-to-many class="com.genie.entity.Child" />
+        </set>
+    </class>
+</hibernate-mapping>
