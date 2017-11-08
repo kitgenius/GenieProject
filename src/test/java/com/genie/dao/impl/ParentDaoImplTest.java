@@ -4,6 +4,7 @@ package com.genie.dao.impl;
 **/
 
 import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.genie.dao.ParentDao;
 import com.genie.entity.Child;
+import com.genie.entity.Organ;
 import com.genie.entity.Parent;
 import com.genie.entity.Sex;
 
@@ -32,11 +34,33 @@ public class ParentDaoImplTest {
 	@Rollback(false)
 	public void attachDirtyTest(){
 		Child child = new Child();
-		child.setChildName("boy1");
-		child.setSex(Sex.MALE.getSexStr());
+		child.setChildName("girl2");
+		child.setSex(Sex.FEMALE.getSexStr());
 		HashSet<Child> childs = new HashSet<Child>();
 		childs.add(child);
-		Parent parent=new Parent("parent1",Sex.MALE.getSexStr(),new Integer(1),childs);
+		Parent parent=new Parent("parent2",Sex.MALE.getSexStr(),new Integer(1),childs);
 		parentDao.attachDirty(parent);
+	}
+	
+	@Test
+	public void findByIdTest(){
+		Parent parent = parentDao.findById(new Integer(6));
+		Set<Child> childSet = parent.getChilds();
+		for(Child child:childSet){
+			System.out.println(child.getChildName());
+		}
+	}
+	
+	@Test
+	public void findOrganByParentId(){
+		Parent parent = parentDao.findById(new Integer(6));
+		Set<Child> childSet = parent.getChilds();
+		for(Child child:childSet){
+			System.out.println(child.getChildName());
+			Set<Organ> organSet = child.getOrgans();
+			for(Organ organ:organSet){
+				System.out.println(organ.getOrganName());
+			}
+		}
 	}
 }

@@ -16,8 +16,8 @@ import com.genie.dao.ParentDao;
 import com.genie.entity.Parent;
 
 /**
- * Home object for domain model class TParent.
- * @see .TParent
+ * Home object for domain model class Parent.
+ * @see .Parent
  * @author Hibernate Tools
  */
 @Repository("parentDao")
@@ -73,7 +73,7 @@ public class ParentDaoImpl implements ParentDao{
 	}
 
 	public void delete(Parent persistentInstance) {
-		log.debug("deleting TParent instance");
+		log.debug("deleting Parent instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
