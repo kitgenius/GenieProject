@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-11-8 22:22:22 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="com.genie.entity.Organ" table="t_organ" catalog="geniedb" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="organName" type="string">
+            <column name="organName" length="50">
+            </column>
+        </property>
+        <property name="parentOrganId" type="java.lang.Integer">
+            <column name="parentOrganId">
+            </column>
+        </property>
+        <property name="contactId" type="java.lang.Integer">
+            <column name="contactId">
+            </column>
+        </property>
+        <set name="childs" table="t_child_organ" cascade="save-update" inverse="true">
+        	<key column="organId"></key>
+        	<many-to-many column="childId" class="com.genie.entity.Child"></many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>
