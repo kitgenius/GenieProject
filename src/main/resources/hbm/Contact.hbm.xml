@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-11-8 22:22:22 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="com.genie.entity.Contact" table="contact" catalog="geniedb" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="address" type="string">
+            <column name="address" length="100">
+                <comment>&#181;&#216;&#214;&#183;</comment>
+            </column>
+        </property>
+        <property name="areaId" type="java.lang.Integer">
+            <column name="areaId">
+                <comment>&#199;&#248;&#211;&#242;id</comment>
+            </column>
+        </property>
+        <property name="telephone" type="string">
+            <column name="telephone" length="14">
+                <comment>&#181;&#231;&#187;&#176;</comment>
+            </column>
+        </property>
+        <property name="qq" type="string">
+            <column name="qq" length="20">
+                <comment>qq</comment>
+            </column>
+        </property>
+        <property name="wechat" type="string">
+            <column name="wechat" length="50">
+                <comment>&#206;&#162;&#208;&#197;</comment>
+            </column>
+        </property>
+        <property name="mail" type="string">
+            <column name="mail" length="50">
+                <comment>&#211;&#202;&#207;&#228;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>
