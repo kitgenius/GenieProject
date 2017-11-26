@@ -4,13 +4,18 @@ package com.genie.dao.impl;
 
 import java.util.List;
 import javax.naming.InitialContext;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.Assert;
 
 import com.genie.dao.ParentDao;
 import com.genie.entity.Parent;
@@ -126,7 +131,28 @@ public class ParentDaoImpl implements ParentDao{
 
 	@Override
 	public List<Parent> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		String queryString = "select * from t_parent";
+		return createSQLQuery(queryString).addEntity(Parent.class).list();
 	}
+	
+	public Session getSession() {
+		return sessionFactory.getCurrentSession();
+	}
+	
+	//原生查询
+	public SQLQuery createSQLQuery(String queryString, Object... values) {
+		Assert.hasText(queryString, "queryString不能为空");
+		SQLQuery query = getSession().createSQLQuery(queryString);
+		query.setCacheable(true);
+		
+		if (values != null) {
+			for (int i = 0; i < values.length; i++) {
+				if (values[i] != null && StringUtils.isNotEmpty(values[i].toString()))
+					query.setParameter(i, values[i]);
+			}
+		}
+
+		return query;
+	}
+	
 }

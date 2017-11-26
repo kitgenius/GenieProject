@@ -11,6 +11,7 @@
 
 	<import resource="classpath:spring-datasource.xml" />
 	<import resource="classpath:spring-hibernate.xml" />
+	<import resource="classpath:spring-security.xml" />
 
 	<bean
 		class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />

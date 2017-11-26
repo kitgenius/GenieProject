@@ -12,6 +12,7 @@ import com.genie.entity.Parent;
 public interface MemberManage {
 	boolean addMember(Parent parent,Child child);
 	boolean deleteMember(Parent parent,Child child);
+	List<Parent> findAllParents();
 	List<Child> findChildByParent(Parent parent);
 	//List<Child> findChildByOrgan();
 }

@@ -43,13 +43,25 @@
 	</filter-mapping>
 
 	<!-- 登陆filter -->
-	<filter>
+	<!-- <filter>
 		<filter-name>authenticationFilter</filter-name>
 		<filter-class>com.genie.filter.AuthenticationFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>authenticationFilter</filter-name>
 		<url-pattern>/ms/userInfo.do</url-pattern>
+	</filter-mapping> -->
+	
+	<!-- Spring Security -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy
+		</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
 	<!-- spring监听器，监听servletContext，读取contextConfigLocation的配置信息 -->
