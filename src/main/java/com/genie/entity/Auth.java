@@ -1,30 +1,32 @@
 package com.genie.entity;
 
 /***********************************************************************
- * Module:  Login.java
+ * Module:  Auth.java
  * Author:  Administrator
- * Purpose: Defines the Class Login
+ * Purpose: Defines the Class Auth
  ***********************************************************************/
 
 import java.util.*;
 
-/** @pdOid ca07c2c5-4576-47c3-bfe6-f2c9bd7aa0d8 */
-public class Login implements java.io.Serializable {
-   /** @pdOid 3f54f2cb-334e-4d71-af27-1aeec095ac12 */
+/** @pdOid bcb1a670-8e66-4506-a0dd-6fed3f3ce21e */
+public class Auth implements java.io.Serializable {
+   /** @pdOid 908b595b-aec5-4883-ac2f-8fbb5a66938b */
    public int id;
-   /** @pdOid 8b7876e0-9c1b-4d9e-92aa-5d5d13f0d822 */
-   public java.lang.String username;
-   /** @pdOid 654909ac-c695-461b-99f0-a3478f3b2305 */
-   public java.lang.String password;
+   /** @pdOid a29d2b39-3e85-42d0-918e-cf09d7e48d06 */
+   public java.lang.String authName;
+   /** @pdOid f92fe73e-115d-408b-b1a9-46a44a0a8a95 */
+   public java.lang.String authPath;
+   /** @pdOid 744a5564-c22f-4117-9df2-eb4ce52edfac */
+   public java.lang.String description;
    
-   /** @pdRoleInfo migr=no name=Role assc=relationship2 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
+   /** @pdRoleInfo migr=no name=Role assc=relationship3 coll=java.util.Collection impl=java.util.HashSet mult=0..* side=A */
    public java.util.Collection<Role> role;
    
    /**
     * Empty constructor which is required by Hibernate
     *
     */
-   public Login() {
+   public Auth() {
       // TODO Auto-generated constructor stub
    }
    
@@ -67,7 +69,7 @@ public class Login implements java.io.Serializable {
       if (!this.role.contains(newRole))
       {
          this.role.add(newRole);
-         newRole.addLogin(this);
+         newRole.addAuth(this);
       }
    }
    
@@ -82,7 +84,7 @@ public class Login implements java.io.Serializable {
          if (this.role.contains(oldRole))
          {
             this.role.remove(oldRole);
-            oldRole.removeLogin(this);
+            oldRole.removeAuth(this);
          }
    }
    
@@ -97,7 +99,7 @@ public class Login implements java.io.Serializable {
          {
             oldRole = (Role)iter.next();
             iter.remove();
-            oldRole.removeLogin(this);
+            oldRole.removeAuth(this);
          }
       }
    }
@@ -123,60 +125,80 @@ public class Login implements java.io.Serializable {
    }
    
    /**
-    * Get value of username
+    * Get value of authName
     *
-    * @return username 
+    * @return authName 
     */
-   public java.lang.String getUsername()
+   public java.lang.String getAuthName()
    {
-      return username;
+      return authName;
    }
    
    /**
-    * Set value of username
+    * Set value of authName
     *
-    * @param newUsername 
+    * @param newAuthName 
     */
-   public void setUsername(java.lang.String newUsername)
+   public void setAuthName(java.lang.String newAuthName)
    {
-      this.username = newUsername;
+      this.authName = newAuthName;
    }
    
    /**
-    * Get value of password
+    * Get value of authPath
     *
-    * @return password 
+    * @return authPath 
     */
-   public java.lang.String getPassword()
+   public java.lang.String getAuthPath()
    {
-      return password;
+      return authPath;
    }
    
    /**
-    * Set value of password
+    * Set value of authPath
     *
-    * @param newPassword 
+    * @param newAuthPath 
     */
-   public void setPassword(java.lang.String newPassword)
+   public void setAuthPath(java.lang.String newAuthPath)
    {
-      this.password = newPassword;
+      this.authPath = newAuthPath;
    }
    
    /**
-    * Get value of loginPK.
+    * Get value of description
     *
-    * @return loginPK object
+    * @return description 
     */
-   public LoginPK getLoginPK() {
-      return new LoginPK(id);
+   public java.lang.String getDescription()
+   {
+      return description;
    }
    
    /**
-    * Set value of loginPK.
+    * Set value of description
+    *
+    * @param newDescription 
+    */
+   public void setDescription(java.lang.String newDescription)
+   {
+      this.description = newDescription;
+   }
+   
+   /**
+    * Get value of authPK.
+    *
+    * @return authPK object
+    */
+   public AuthPK getAuthPK() {
+      return new AuthPK(id);
+   }
+   
+   /**
+    * Set value of authPK.
     * 
     * @param pk
     */
-   public void setLoginPK(LoginPK pk) {
+   public void setAuthPK(AuthPK pk) {
       if (pk != null) {
          this.id = pk.getId();
       }
@@ -193,18 +215,21 @@ public class Login implements java.io.Serializable {
       if (other == this)
          return true;   
    
-      if (!(other instanceof Login))
+      if (!(other instanceof Auth))
          return false;
    
-      Login cast = (Login) other;
+      Auth cast = (Auth) other;
    
       if (this.id != cast.getId())
          return false;
    
-      if (this.username == null ? cast.getUsername() != this.username : !this.username.equals( cast.getUsername()))
+      if (this.authName == null ? cast.getAuthName() != this.authName : !this.authName.equals( cast.getAuthName()))
          return false;
    
-      if (this.password == null ? cast.getPassword() != this.password : !this.password.equals( cast.getPassword()))
+      if (this.authPath == null ? cast.getAuthPath() != this.authPath : !this.authPath.equals( cast.getAuthPath()))
+         return false;
+   
+      if (this.description == null ? cast.getDescription() != this.description : !this.description.equals( cast.getDescription()))
          return false;
    
       return true;
@@ -216,10 +241,12 @@ public class Login implements java.io.Serializable {
    public int hashCode() {
       int hashCode = 0;
       hashCode = 29 * hashCode + (new Integer(id)).hashCode();
-      if (this.username != null) 
-         hashCode = 29 * hashCode + username.hashCode();
-      if (this.password != null) 
-         hashCode = 29 * hashCode + password.hashCode();
+      if (this.authName != null) 
+         hashCode = 29 * hashCode + authName.hashCode();
+      if (this.authPath != null) 
+         hashCode = 29 * hashCode + authPath.hashCode();
+      if (this.description != null) 
+         hashCode = 29 * hashCode + description.hashCode();
       return hashCode;
    }
    
@@ -229,10 +256,11 @@ public class Login implements java.io.Serializable {
    public String toString()
    {
       StringBuffer ret = new StringBuffer();
-      ret.append( "Login: " );
+      ret.append( "Auth: " );
       ret.append( "id='" + id + "'");
-      ret.append( "username='" + username + "'");
-      ret.append( "password='" + password + "'");
+      ret.append( "authName='" + authName + "'");
+      ret.append( "authPath='" + authPath + "'");
+      ret.append( "description='" + description + "'");
       return ret.toString();
    }
 

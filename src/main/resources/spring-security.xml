@@ -1,22 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/security"
-	xmlns:beans="http://www.springframework.org/schema/beans" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 
-	<http auto-config="true">
-		<intercept-url pattern="/memberManage/**" access="hasRole('ROLE_USER')" />
-	</http>
+	<!-- 手动配置验证信息 -->
+	<!-- <http auto-config="true"> <intercept-url pattern="/memberManage/**" 
+		access="hasRole('ROLE_USER')" /> </http> -->
 
-	<authentication-manager>
-	  <authentication-provider>
-	    <user-service>
-		<user name="genie" password="genie" authorities="ROLE_USER" />
-	    </user-service>
-	  </authentication-provider>
+	<!-- <authentication-manager> <authentication-provider> <user-service> <user 
+		name="genie" password="genie" authorities="ROLE_USER" /> </user-service> 
+		</authentication-provider> </authentication-manager> -->
+
+	<!-- 读库方式配置验证、授权 -->
+	<http pattern="/ms/login*.do" security="none"/>
+	<http>
+		<form-login login-page="/html/login.html"/>
+		<session-management>
+			<concurrency-control max-session="1" error-if-maximum-exceeded="false"/>
+		</session-management>
+		<custom-filter ref="myFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
+	</http>
+	
+	<beans:bean id="myFilter" class="com.genie.security.MyFilterSecurityInterceptor	">
+		<beans:property name="authenticationManager" ref="authenticationManager"></beans:property>
+		<beans:property name="accessDecisionManager" ref="myAccessDecisionManager"></beans:property>
+		<beans:property name="securityMetadataManager" ref="securityMetadataManager"></beans:property>
+	</beans:bean>
+
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider user-service-ref="myUserDetailService">
+			<!-- <password-encoder hash="md5"></password-encoder> -->
+		</authentication-provider>
 	</authentication-manager>
+	
+	<beans:bean id="myUserDetailService" class="com.genie.security.myUserDetailService"></beans:bean>
+	<beans:bean id="myAccessDecisionManager" class="com.genie.security.myAccessDecisionManager"></beans:bean>
+	<beans:bean id="securityMetadataManager" class="com.genie.security.myInvocationSecurityMetadataManager"></beans:bean>
 
 </beans:beans>

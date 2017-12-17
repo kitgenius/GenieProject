@@ -37,7 +37,7 @@ public class LoginDaoImpl implements LoginDao {
 	}*/
 
 	public void persist(Login transientInstance) {
-		log.debug("persisting TLogin instance");
+		log.debug("persisting Login instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
@@ -48,7 +48,7 @@ public class LoginDaoImpl implements LoginDao {
 	}
 
 	public void attachDirty(Login instance) {
-		log.debug("attaching dirty TLogin instance");
+		log.debug("attaching dirty Login instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -59,7 +59,7 @@ public class LoginDaoImpl implements LoginDao {
 	}
 
 	public void attachClean(Login instance) {
-		log.debug("attaching clean TLogin instance");
+		log.debug("attaching clean Login instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
@@ -70,7 +70,7 @@ public class LoginDaoImpl implements LoginDao {
 	}
 
 	public void delete(Login persistentInstance) {
-		log.debug("deleting TLogin instance");
+		log.debug("deleting Login instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -81,7 +81,7 @@ public class LoginDaoImpl implements LoginDao {
 	}
 
 	public Login merge(Login detachedInstance) {
-		log.debug("merging TLogin instance");
+		log.debug("merging Login instance");
 		try {
 			Login result = (Login) sessionFactory.getCurrentSession().merge(detachedInstance);
 			log.debug("merge successful");
@@ -93,7 +93,7 @@ public class LoginDaoImpl implements LoginDao {
 	}
 
 	public Login findById(java.lang.Integer id) {
-		log.debug("getting TLogin instance with id: " + id);
+		log.debug("getting Login instance with id: " + id);
 		try {
 			Login instance = (Login) sessionFactory.getCurrentSession().get("com.genie.entity.Login", id);
 			if (instance == null) {
@@ -109,7 +109,7 @@ public class LoginDaoImpl implements LoginDao {
 	}
 
 	public List findByExample(Login instance) {
-		log.debug("finding TLogin instance by example");
+		log.debug("finding Login instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession().createCriteria("com.genie.entity.Login")
 					.add(Example.create(instance)).list();
