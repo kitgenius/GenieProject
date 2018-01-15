@@ -22,7 +22,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+import com.genie.dao.DaoException;
 import com.genie.dao.HibernateDao;
 
 
@@ -31,6 +34,7 @@ import com.genie.dao.HibernateDao;
  * Class that implements <Code>HibernateDao</Code> interface.
  *
  */
+@Repository("hibernateDao")
 public class HibernateDaoImpl implements HibernateDao {
 
    private boolean autoCommit = true;
@@ -40,6 +44,9 @@ public class HibernateDaoImpl implements HibernateDao {
    private boolean cacheQueries = false;
 
    private String queryCacheRegion;
+   
+   @Autowired
+   private SessionFactory sessionFactory;
 
    private Log log = LogFactory.getLog(HibernateDaoImpl.class);
    
@@ -55,9 +62,9 @@ public class HibernateDaoImpl implements HibernateDao {
     *
     * @param sessionFactory
     */
-   public HibernateDaoImpl(SessionFactory sessionFactory) {
+   /*public HibernateDaoImpl(SessionFactory sessionFactory) {
      setSessionFactory(sessionFactory);
-   }
+   }*/
    
    /*
     * (non-Javadoc)
@@ -65,7 +72,7 @@ public class HibernateDaoImpl implements HibernateDao {
     * @see com.sybase.orm.dao.hibernate.HibernateDao#getSessionFactory
     */
    public SessionFactory getSessionFactory() {
-      return HibernateSessionManager.getSessionFactory();
+      return sessionFactory;
    }
 
    /*
@@ -83,7 +90,7 @@ public class HibernateDaoImpl implements HibernateDao {
     * @see com.sybase.orm.dao.hibernate.HibernateDao#setSession(org.hibernate.Session)
     */
    public Session setSession(Session session) {
-      return HibernateSessionManager.setSession(session);
+      return null;
    }
 
    /*
@@ -92,7 +99,7 @@ public class HibernateDaoImpl implements HibernateDao {
     * @see com.sybase.orm.dao.hibernate.HibernateDao#getSession(boolean)
     */
    public Session getSession(boolean openSession) {
-      return HibernateSessionManager.getSession(openSession);
+      return null;
    }   
 
    /*
@@ -101,7 +108,7 @@ public class HibernateDaoImpl implements HibernateDao {
     * @see com.sybase.orm.dao.hibernate.HibernateDao#getSession()
     */
    public Session getSession() {
-      return getSession(false);
+	   return sessionFactory.getCurrentSession();
    }
 
    /*
@@ -110,7 +117,7 @@ public class HibernateDaoImpl implements HibernateDao {
     * @see com.sybase.orm.dao.hibernate.HibernateDao#closeSession()
     */
    public void closeSession() throws DaoException {
-      HibernateSessionManager.closeSession();
+      /*HibernateSessionManager.closeSession();*/
    }
 
    /*
@@ -149,7 +156,8 @@ public class HibernateDaoImpl implements HibernateDao {
     * @see com.sybase.orm.dao.hibernate.HibernateDao#beginTransaction()
     */
    public void beginTransaction() throws DaoException {
-      HibernateSessionManager.beginTransaction();
+      /*HibernateSessionManager.beginTransaction();*/
+	   this.getSession().beginTransaction();
    }
 
    /*
@@ -211,18 +219,18 @@ public class HibernateDaoImpl implements HibernateDao {
     * 
     * @see com.sybase.orm.dao.hibernate.HibernateDao#getConnection()
     */
-   public Connection getConnection() {
+   /*public Connection getConnection() {
       if (getSession() != null && getSession().isConnected())
          return getSession().connection();
       return null;
-   }
+   }*/
 
    /*
     * (non-Javadoc)
     * 
     * @see com.sybase.orm.dao.hibernate.HibernateDao#closeConnection()
     */
-	public void closeConnection() throws DaoException {
+	/*public void closeConnection() throws DaoException {
       if (getSession() != null)
          try {
             getSession().connection().close();
@@ -233,7 +241,7 @@ public class HibernateDaoImpl implements HibernateDao {
             if (autoCloseSession)
                closeSession();
          }
-   }
+   }*/
 
    /* 
     * (non-Javadoc)
@@ -313,7 +321,7 @@ public class HibernateDaoImpl implements HibernateDao {
       List objs = new ArrayList();
 
       try {
-         Session session = this.openSession();
+         Session session = this.getSession();
          beginTransaction();
          objs = session.createCriteria(clazz).list();
          if (autoCommit)
@@ -338,7 +346,7 @@ public class HibernateDaoImpl implements HibernateDao {
       List objs = new ArrayList();
 
       try {
-         Session session = this.openSession();
+         Session session = this.getSession();
          beginTransaction();
          objs = session.createCriteria(clazz).add(restriction).list();
          if (autoCommit)

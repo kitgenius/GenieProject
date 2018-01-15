@@ -1,4 +1,4 @@
-package com.genie.service.impl;
+/*package com.genie.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,9 +10,9 @@ import com.genie.dao.LoginDao;
 import com.genie.entity.Login;
 import com.genie.service.LoginValid;
 
-/*author:Genie
+author:Genie
  *date:2017年5月1日
-**/
+*
 @Service("loginValid")
 public class LoginValidImpl implements LoginValid {
 
@@ -38,3 +38,4 @@ public class LoginValidImpl implements LoginValid {
 	}
 
 }
+*/

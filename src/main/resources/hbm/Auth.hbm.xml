@@ -19,11 +19,11 @@
       <property name="description" insert="true" update="true" lazy="false" optimistic-lock="true">
          <column name="description" sql-type="varchar(254)" length="254"/>
       </property>
-      <bag name="role" table="relationship3" outer-join="false" inverse="true" lazy="true" optimistic-lock="true">
+      <bag name="role" table="t_role_auth" outer-join="false" inverse="true" lazy="true" optimistic-lock="true">
       	<key>
       		<column name="id" sql-type="int" not-null="true" length="0"/>
       	</key>
-      	<many-to-many class="Role" outer-join="false">
+      	<many-to-many class="com.genie.entity.Role" outer-join="false">
       		<column name="rol_id" sql-type="int" not-null="true" length="0"/>
       	</many-to-many>
       </bag>

@@ -1,3 +1,5 @@
+package com.genie.entity;
+
 /***********************************************************************
  * Module:  AuthPK.java
  * Author:  Administrator

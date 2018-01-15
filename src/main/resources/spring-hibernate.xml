@@ -37,6 +37,8 @@
 				<value>./hbm/Parent.hbm.xml</value>
 				<value>./hbm/Child.hbm.xml</value>
 				<value>./hbm/Organ.hbm.xml</value>
+				<value>./hbm/Auth.hbm.xml</value>
+				<value>./hbm/Role.hbm.xml</value>
 			</list>
 		</property>
 		<!-- 扫描hibernate注解配置的entity -->

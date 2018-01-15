@@ -1,4 +1,4 @@
-package com.genie.service.impl;
+/*package com.genie.service.impl;
 
 import java.util.List;
 
@@ -9,9 +9,9 @@ import com.genie.dao.LoginDao;
 import com.genie.entity.Login;
 import com.genie.service.LoginManage;
 
-/*author:Genie
+author:Genie
  *date:2017年10月10日
-**/
+*
 @Service("loginManage")
 public class LoginManageImpl implements LoginManage {
 
@@ -62,3 +62,4 @@ public class LoginManageImpl implements LoginManage {
 	}
 
 }
+*/

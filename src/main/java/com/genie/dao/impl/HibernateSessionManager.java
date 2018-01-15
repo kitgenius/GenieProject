@@ -13,6 +13,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.genie.dao.DaoException;
 
@@ -25,7 +26,8 @@ import com.genie.dao.DaoException;
  
 public class HibernateSessionManager {
 
-   private static final SessionFactory sessionFactory;
+   @Autowired
+   private static SessionFactory sessionFactory;
 
    private static final ThreadLocal threadSession = new ThreadLocal();
 
@@ -33,14 +35,14 @@ public class HibernateSessionManager {
 
    private static Log log = LogFactory.getLog(HibernateSessionManager.class);
 
-   static {
+  /* static {
       try {
          sessionFactory = new Configuration().configure().buildSessionFactory();
       } catch (Throwable ex) {
          log.error("Initial SessionFactory creation failed.", ex);
          throw new DaoException("Initial SessionFactory creation failed.", ex);
       }
-   }
+   }*/
 
    /**
     * Private empty constructor. Cannot be used to create instance. Call static

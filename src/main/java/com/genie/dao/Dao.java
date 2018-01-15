@@ -19,12 +19,12 @@ public interface Dao{
     *
     * @return connection
     */
-   public Connection getConnection();
+   /*public Connection getConnection();*/
    
    /**
     * Close connection used
     */ 
-   public void closeConnection() throws DaoException;
+   /*public void closeConnection() throws DaoException;*/
    
    /**
     * Begin transaction

@@ -1,3 +1,5 @@
+package com.genie.entity;
+
 /***********************************************************************
  * Module:  RolePK.java
  * Author:  Administrator

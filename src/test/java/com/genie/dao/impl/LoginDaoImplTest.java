@@ -1,4 +1,4 @@
-package com.genie.dao.impl;
+/*package com.genie.dao.impl;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.genie.dao.LoginDao;
 import com.genie.entity.Login;
 
-/*author:Genie
+author:Genie
  *date:2017年10月10日
-**/
+*
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations="classpath:spring.xml")
 @Transactional
@@ -59,3 +59,4 @@ public class LoginDaoImplTest {
 		loginDao.attachDirty(loginEntity);
 	}
 }
+*/
