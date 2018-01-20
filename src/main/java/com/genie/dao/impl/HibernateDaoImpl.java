@@ -166,7 +166,8 @@ public class HibernateDaoImpl implements HibernateDao {
     * @see com.sybase.orm.dao.hibernate.HibernateDao#commitTransaction()
     */
    public void commitTransaction() throws DaoException {
-      HibernateSessionManager.commitTransaction();
+      //HibernateSessionManager.commitTransaction();
+      this.getSession().getTransaction().commit();
    }
 
    /*
@@ -175,7 +176,8 @@ public class HibernateDaoImpl implements HibernateDao {
     * @see com.sybase.orm.dao.hibernate.HibernateDao#rollbackTransaction()
     */
    public void rollbackTransaction() throws DaoException {
-      HibernateSessionManager.rollbackTransaction();
+      //HibernateSessionManager.rollbackTransaction();
+	   this.getSession().getTransaction().rollback();
    }
 
    /*
@@ -322,7 +324,7 @@ public class HibernateDaoImpl implements HibernateDao {
 
       try {
          Session session = this.getSession();
-         beginTransaction();
+         //beginTransaction();
          objs = session.createCriteria(clazz).list();
          if (autoCommit)
             commitTransaction();
