@@ -326,16 +326,16 @@ public class HibernateDaoImpl implements HibernateDao {
          Session session = this.getSession();
          //beginTransaction();
          objs = session.createCriteria(clazz).list();
-         if (autoCommit)
-            commitTransaction();
+        /* if (autoCommit)
+            commitTransaction();*/
       } catch (HibernateException ex) {
-         rollbackTransaction();
+         //rollbackTransaction();
          log.error("Fail to find all  objects", ex);
          throw new DaoException("Fail to find all  objects", ex);
-      } finally {
+      } /*finally {
          if (autoCloseSession)
             closeSession();
-      }
+      }*/
       return objs;
    }
    
