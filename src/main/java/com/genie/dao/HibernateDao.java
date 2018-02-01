@@ -16,17 +16,7 @@ import org.hibernate.criterion.Criterion;
  * Interface that defines common methods for Hibernate access.
  *
  */
-public interface HibernateDao extends Dao {
-
-   public SessionFactory getSessionFactory();
-
-   public void setSessionFactory(SessionFactory sessions);
-
-   public Session setSession(Session session);
-
-   public Session getSession(boolean openSession);
-   
-   public Session getSession();
+public interface HibernateDao {
 
    public void update(Object persistentObject) throws DaoException;
 
@@ -65,10 +55,6 @@ public interface HibernateDao extends Dao {
    public List findByNamedQueryAndNamedParam(final String queryName, final String[] paramNames, final Object[] values) throws DaoException;
 
    public List findByNamedQueryAndValueBean(final String queryName, final Object valueBean) throws DaoException;
-
-   public boolean isCacheQueries();
-
-   public String getQueryCacheRegion();
 
    public Serializable save(Object persistentObject) throws DaoException;
 

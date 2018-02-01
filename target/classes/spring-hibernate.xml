@@ -61,7 +61,6 @@
 			<tx:method name="attach*" propagation="REQUIRED" />
 			<tx:method name="get*" propagation="SUPPORTS" read-only="true" />
 			<tx:method name="find*" propagation="SUPPORTS" read-only="true" />
-			<tx:method name="select*" propagation="SUPPORTS" read-only="true" />
 			<tx:method name="load*" propagation="SUPPORTS" read-only="true" />
 
 			<!-- 其他方法采用默认事务方式 -->
