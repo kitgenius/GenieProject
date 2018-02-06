@@ -85,4 +85,27 @@ public class HibernateDaoImplTest {
 			System.out.println("login name is : " + login.getUsername());
 		}
 	}
+	
+	@Test
+	public void findByCriterionsTest2(){
+		List<Login> loginList = null;
+		List<Criterion> restrictionsList = new ArrayList();
+		restrictionsList.add(Restrictions.like("username", "junit%"));
+		restrictionsList.add(Restrictions.like("password", "pass%"));
+		loginList = hibernateDao.findByCriterions(Login.class, restrictionsList,0,2);
+		for(Login login:loginList){
+			System.out.println("login name is : " + login.getUsername());
+		}
+	}
+	
+	@Test
+	public void findBySQLQueryTest(){
+		List<Login> loginList = null;
+		String sqlStr = "select {login.*} from t_login login";
+		loginList = hibernateDao.findBySQLQuery(sqlStr, "login", Login.class);
+		for(Login login:loginList){
+			System.out.println("login name is : " + login.getUsername());
+		}
+		
+	}
 }

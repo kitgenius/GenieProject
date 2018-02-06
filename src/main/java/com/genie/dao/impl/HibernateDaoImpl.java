@@ -154,7 +154,7 @@ public class HibernateDaoImpl implements HibernateDao {
 	}
 
 	/**
-	 * 根据条件查询，指定从第几条数据开始返回和返回数据的条数，第一条设置firstResult=0
+	 * 根据多个条件查询，多个条件and。指定从第几条数据开始返回和返回数据的条数，第一条设置firstResult=0
 	 * @param clazz 持久化类
 	 * @param restrictions 条件
 	 * @param firstResult 从第几条数据返回
