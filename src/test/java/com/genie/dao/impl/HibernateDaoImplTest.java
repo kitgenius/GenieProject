@@ -3,6 +3,7 @@ package com.genie.dao.impl;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -107,5 +108,41 @@ public class HibernateDaoImplTest {
 			System.out.println("login name is : " + login.getUsername());
 		}
 		
+	}
+	
+	@Test
+	public void findByHQLQueryTest(){
+		String hqlStr = "select login.username from Login login where login.username like 'genie%'";
+		List list = hibernateDao.findByHQLQuery(hqlStr);
+		Iterator it = list.iterator();
+		while(it.hasNext()){
+			System.out.println("login username is : " + it.next());
+		}
+	}
+	
+	@Test
+	public void findByNamedParamTest(){
+		String hqlStr="from Login login where login.username = :username and login.password = :password";
+		String[] paramNames = new String[2];
+		paramNames[0]="username";
+		paramNames[1]="password";
+		String[] values = new String[2];
+		values[0] = "genie";
+		values[1] = "genie";
+		List<Login> loginList = hibernateDao.findByNamedParam(hqlStr, paramNames, values);
+		for(Login login:loginList){
+			System.out.println("username is : " + login.getUsername() +  "\n" + "password is : " + login.getPassword());
+		}
+	}
+	
+	@Test
+	public void findByNamedParamTest2(){
+		String hqlStr="from Login login where login.username like :username";
+		String[] paramNames = {"username"};
+		String[] values = {"junit%"};
+		List<Login> loginList = hibernateDao.findByNamedParam(hqlStr, paramNames, values, 2, 2);
+		for(Login login:loginList){
+			System.out.println("username is : " + login.getUsername());
+		}
 	}
 }
