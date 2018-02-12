@@ -25,4 +25,13 @@
       	</many-to-many>
       </bag>
    </class>
+   <query name="getLoginByUsername">
+      <![CDATA[from Login]]>
+   </query>
+   <query name="getLoginByUsername2">
+      <![CDATA[from Login login where login.username = ?]]>
+   </query>
+   <query name="getLoginByUsername3">
+      <![CDATA[from Login login where login.username like ? and login.password = ?]]>
+   </query>
 </hibernate-mapping>

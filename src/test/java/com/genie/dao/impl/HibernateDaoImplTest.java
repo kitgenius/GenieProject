@@ -159,4 +159,29 @@ public class HibernateDaoImplTest {
 			System.out.println("username is :" + login.getUsername());
 		}
 	}
+	
+	@Test
+	public void findByNamedQueryTest(){
+		List<Login> loginList= hibernateDao.findByNamedQuery("getLoginByUsername");
+		for(Login login:loginList){
+			System.out.println("username is : " + login.getUsername());
+		}
+	}
+	
+	@Test
+	public void findByNameQueryTest2(){
+		List<Login> loginList= hibernateDao.findByNamedQuery("getLoginByUsername2","genie");
+		for(Login login:loginList){
+			System.out.println("username is : " + login.getUsername());
+		}
+	}
+	
+	@Test
+	public void findByNamedQuery3(){
+		String[] strArray = new String[] {"test%","test1"};
+		List<Login> loginList= hibernateDao.findByNamedQuery("getLoginByUsername3",strArray);
+		for(Login login:loginList){
+			System.out.println("username is : " + login.getUsername());
+		}
+	}
 }
