@@ -3,8 +3,10 @@ package com.genie.dao.impl;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
@@ -143,6 +145,18 @@ public class HibernateDaoImplTest {
 		List<Login> loginList = hibernateDao.findByNamedParam(hqlStr, paramNames, values, 2, 2);
 		for(Login login:loginList){
 			System.out.println("username is : " + login.getUsername());
+		}
+	}
+	
+	@Test
+	public void findByValueBeanTest(){
+		String hqlStr="from Login login where login.username like :username and login.password like :password";
+		Login valueBean = new Login();
+		valueBean.setUsername("genie%");
+		valueBean.setPassword("genie");
+		List<Login> loginList = hibernateDao.findByValueBean(hqlStr, valueBean);
+		for(Login login:loginList){
+			System.out.println("username is :" + login.getUsername());
 		}
 	}
 }

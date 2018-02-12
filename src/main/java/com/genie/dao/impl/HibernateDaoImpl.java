@@ -278,7 +278,7 @@ public class HibernateDaoImpl implements HibernateDao {
 	}
 
 	/*
-	 * hql设置一个或多个参数并赋值条件查询数据，一个参数传入pojo，多个参数则传入参数名-值的map。
+	 * hql设置一个或多个参数并赋值条件查询数据，传入pojo进行查询
 	 */
 	public List findByValueBean(final String queryString, final Object valueBean) throws DaoException {
 		Session session = this.getSession();
