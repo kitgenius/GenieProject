@@ -34,4 +34,7 @@
    <query name="getLoginByUsername3">
       <![CDATA[from Login login where login.username like ? and login.password = ?]]>
    </query>
+   <query name="getLoginByUsername4">
+      <![CDATA[from Login login where login.username like :username and login.password = :password]]>
+   </query>
 </hibernate-mapping>

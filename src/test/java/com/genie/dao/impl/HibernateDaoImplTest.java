@@ -15,6 +15,7 @@ import org.hibernate.criterion.Restrictions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -183,5 +184,67 @@ public class HibernateDaoImplTest {
 		for(Login login:loginList){
 			System.out.println("username is : " + login.getUsername());
 		}
+	}
+	
+	@Test
+	public void findByNamedQueryAndNamedParamTest(){
+		String namedQuery = "getLoginByUsername4";
+		String[] paramNames = new String[] {"username","password"};
+		String[] values = new String[] {"genie%","genie"};
+		List<Login> loginList = hibernateDao.findByNamedQueryAndNamedParam(namedQuery, paramNames, values);
+		for(Login login:loginList){
+			System.out.println("username is : " + login.getUsername());
+			System.out.println("password is : " + login.getPassword());
+		}
+	}
+	
+	@Test
+	public void findByNamedQueryAndValueBeanTest(){
+		String namedQuery = "getLoginByUsername4";
+		Login login = new Login();
+		login.setUsername("genie%");
+		login.setPassword("genie");
+		List<Login> loginList = hibernateDao.findByNamedQueryAndValueBean(namedQuery, login);
+		for(Login loginResult:loginList){
+			System.out.println("username is : " + loginResult.getUsername());
+			System.out.println("password is : " + loginResult.getPassword());
+		}
+	}
+	
+	@Test
+	@Rollback(false)
+	public void saveTest(){
+		Login login = new Login();
+		login.setUsername("saveTest");
+		login.setPassword("saveTest");
+		hibernateDao.save(login);
+	}
+	
+	@Test
+	@Rollback(false)
+	public void saveOrUpdateTest(){
+		Login login = new Login();
+		login.setUsername("saveTest");
+		login.setPassword("saveTest2");
+		hibernateDao.saveOrUpdate(login);
+	}
+	
+	@Test
+	@Rollback(false)
+	public void saveOrUpdateTest2(){
+		Criterion restriction = Restrictions.eq("password", "saveTest");
+		List<Login> loginList = hibernateDao.findByProperty(Login.class, restriction);
+		Login login = loginList.get(0);
+		login.setPassword("newPassword");
+		hibernateDao.saveOrUpdate(login);
+	}
+	
+	@Test
+	@Rollback(false)
+	public void deleteTest(){
+		Criterion restriction = Restrictions.eq("password", "newPassword");
+		List<Login> loginList = hibernateDao.findByProperty(Login.class, restriction);
+		Login login = loginList.get(0);
+		hibernateDao.delete(login);
 	}
 }
