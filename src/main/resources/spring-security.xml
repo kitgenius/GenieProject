@@ -16,7 +16,7 @@
 
 	<!-- 读库方式配置验证、授权 -->
 	<http pattern="/ms/login*.do" security="none"/>
-	<http>
+	<http access-denied-page="/html/accessDenied.html">
 		<form-login login-page="/html/login.html"/>
 		<session-management>
 			<concurrency-control max-session="1" error-if-maximum-exceeded="false"/>
@@ -27,7 +27,7 @@
 	<beans:bean id="myFilter" class="com.genie.security.MyFilterSecurityInterceptor	">
 		<beans:property name="authenticationManager" ref="authenticationManager"></beans:property>
 		<beans:property name="accessDecisionManager" ref="myAccessDecisionManager"></beans:property>
-		<beans:property name="securityMetadataManager" ref="securityMetadataManager"></beans:property>
+		<beans:property name="securityMetadataSource" ref="securityMetadataSource"></beans:property>
 	</beans:bean>
 
 	<authentication-manager alias="authenticationManager">
@@ -38,6 +38,6 @@
 	
 	<beans:bean id="myUserDetailService" class="com.genie.security.myUserDetailService"></beans:bean>
 	<beans:bean id="myAccessDecisionManager" class="com.genie.security.myAccessDecisionManager"></beans:bean>
-	<beans:bean id="securityMetadataManager" class="com.genie.security.myInvocationSecurityMetadataManager"></beans:bean>
+	<beans:bean id="securityMetadataSource" class="com.genie.security.myInvocationSecurityMetadataSource"></beans:bean>
 
 </beans:beans>
