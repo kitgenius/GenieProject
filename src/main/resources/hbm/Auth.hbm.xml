@@ -2,9 +2,8 @@
 <!-- Hibernate XML Mapping File -->
 <!-- Author: Administrator -->
 <!-- Modified: 2017年12月17日 星期日 20:49:44 -->
-<!DOCTYPE hibernate-mapping PUBLIC
-   "-//Hibernate/Hibernate Mapping DTD//EN"
-   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping auto-import="true">
    <class name="com.genie.entity.Auth" table="t_auth" mutable="true" dynamic-update="false" dynamic-insert="false" select-before-update="false" lazy="true" abstract="false">
       <id name="id">
@@ -24,7 +23,7 @@
       		<column name="id" sql-type="int" not-null="true" length="0"/>
       	</key>
       	<many-to-many class="com.genie.entity.Role" outer-join="false">
-      		<column name="rol_id" sql-type="int" not-null="true" length="0"/>
+      		<column name="role_id" sql-type="int" not-null="true" length="0"/>
       	</many-to-many>
       </bag>
    </class>

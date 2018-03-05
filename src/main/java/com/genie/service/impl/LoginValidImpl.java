@@ -1,4 +1,4 @@
-/*package com.genie.service.impl;
+package com.genie.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,9 +10,11 @@ import com.genie.dao.LoginDao;
 import com.genie.entity.Login;
 import com.genie.service.LoginValid;
 
-author:Genie
- *date:2017年5月1日
-*
+/**
+ * author:Genie
+ * date:2017年5月1日
+ */
+
 @Service("loginValid")
 public class LoginValidImpl implements LoginValid {
 
@@ -28,7 +30,7 @@ public class LoginValidImpl implements LoginValid {
 		instance.setUsername(username);
 		instance.setPassword(password);
 		
-		if(loginDao.findByExample(instance).isEmpty() == false){
+		if(loginDao.queryByExample(Login.class,instance).isEmpty() == false){
 			HttpSession session = request.getSession();
 			session.setAttribute("username", username);
 			return true;
@@ -38,4 +40,3 @@ public class LoginValidImpl implements LoginValid {
 	}
 
 }
-*/

@@ -2,21 +2,72 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script type="text/javascript">
+var token;
+var header;
+
+$(function () {
+	function getCsrfToken(){
+	   $.get("../ms/getCsrfToken.do",function(data){
+	            $("head").append(data);
+	            token = $("meta[name=‘_csrf‘]").attr("content");
+	            header = $("meta[name=‘_csrf_header‘]").attr("content");
+	            $.ajaxSetup({
+	                 beforeSend: function (xhr) {
+	                  if(header && token ){
+	                      xhr.setRequestHeader(header, token);
+	                  }
+	             }
+	          });
+	     });
+	   }
+	　　getCsrfToken()
+	})
+
+	function login() {
+		$.ajax({
+			//几个参数需要注意一下
+			type : "POST",//方法类型
+			dataType : "json",//预期服务器返回的数据类型
+			url : "/GenieProject/ms/login.do",//url
+			data : $('#loginForm').serialize(),
+			/* headers : {header:token}, */
+			beforeSend: function (xhr) {
+	                  if(header && token ){
+	                      xhr.setRequestHeader(header, token);
+	                  }
+	             },
+			success : function(result) {
+				console.log(result);//打印服务端返回的数据(调试用)
+				if (result.resultCode == 200) {
+					alert("SUCCESS");
+				}
+				;
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+</script>
+<title>GenieProject login</title>
 </head>
 <body>
-	<div id="login">
-		<form action="/GenieProject/ms/login.do" method="post">
+	<div id="loginForm">
+		<form onsubmit="return false" action="##" method="post">
 			<p>
-				<input type="text" name=username>
+				<input type="text" name="username" value="genie">
 			<p>
-				<input type="password" name=password>
+				<input type="password" name="password" value="genie">
 			<p>
-				<input type="submit" value="登陆">
+				<input type="button" value="登陆" onclick="login()"> &nbsp;<input
+					type="reset" value="重置">
+			<p>
 		</form>
 	</div>
 
-	<div id="login2">
+	<!-- <div id="login2">
 		<form action="/GenieProject/ms/login2.do" method="post">
 			<p>
 				<input type="text" name=username2>
@@ -25,9 +76,15 @@
 			<p>
 				<input type="submit" value="登陆2">
 		</form>
-	</div>
+	</div> -->
 	<div>
-		<a href="/GenieProject/ms/userInfo.do"><input type="button" name="userInfoBtn" value="用户信息"></a>
+		<a href="/GenieProject/ms/userInfo.do"><input type="button"
+			name="userInfoBtn" value="用户信息"></a>
+	</div>
+	<p>
+	<div>
+		<a href="/GenieProject/ms/logout.do"><input type="button"
+			name="userILogoutBtn" value="用户退出"></a>
 	</div>
 </body>
 </html>

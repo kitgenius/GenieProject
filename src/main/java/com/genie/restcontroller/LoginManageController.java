@@ -24,13 +24,13 @@ import com.genie.service.LoginManage;
 @RequestMapping("/loginManage")
 public class LoginManageController {
 	
-	@Autowired
-	private LoginManage loginManage;
+	/*@Autowired
+	private LoginManage loginManage;*/
 	
 	@Autowired
 	private HttpServletRequest request;
 	
-	@RequestMapping(value = "/loginInfo.do", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/loginInfo.do", method = RequestMethod.GET)
 	public LoginVO loginInfo() {
 		LoginVO loginVO = new LoginVO();
 		HttpSession session = request.getSession();
@@ -43,9 +43,9 @@ public class LoginManageController {
 		}else{
 			return null;
 		}
-	}
+	}*/
 	
-	@RequestMapping(value = "addLogin.do", method = RequestMethod.POST)
+	/*@RequestMapping(value = "addLogin.do", method = RequestMethod.POST)
 	public ResponseModel addLogin(@RequestParam String username,@RequestParam String password){
 		ResponseModel resp = new ResponseModel();
 		boolean status = loginManage.addLogin(username, password);
@@ -63,5 +63,5 @@ public class LoginManageController {
 		resp.setMsg(msg);
 		resp.setData(loginVO);
 		return resp;
-	}
+	}*/
 }

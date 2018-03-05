@@ -26,7 +26,7 @@ public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor imp
 	@Override
 	public Class<?> getSecureObjectClass() {
 		// TODO Auto-generated method stub
-		return null;
+		return FilterInvocation.class;	
 	}
 
 	@Override

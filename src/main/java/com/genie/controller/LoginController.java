@@ -3,7 +3,10 @@ package com.genie.controller;
  *date:2017年4月11日
 **/
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,39 +30,28 @@ public class LoginController {
 	private LoginValid loginValid;
 	
 	@RequestMapping(value="/login.do",method=RequestMethod.POST)
-	/*public String login(@RequestParam("username") String username, @RequestParam("password") String password){
-		
-		System.out.println("username:" + username + ",password:"+password);
-		if(loginValid.loginValid(username, password)){
-			HttpSession session = request.getSession();
-			if(session.getAttribute("username") == null){
-				session.setAttribute("username", username);
-				session.setAttribute("oldSessionId", session.getId());
-				request.changeSessionId();
-				session.setAttribute("newSessionId", session.getId());
-			}
-			return "controllCenter";
-		}
-		    
-		else
-			return "failed";
-	}*/
-	@ResponseBody
-	public boolean login(@RequestParam("username") String username, @RequestParam("password") String password){
+	public void login(@RequestParam("username") String username, @RequestParam("password") String password,HttpServletResponse response){
 		if(loginValid.loginValid(username, password)){
 			HttpSession session = request.getSession();
 			if(session.getAttribute("username") == null){
 				session.setAttribute("username", username);
 				request.changeSessionId();
 			}
-			return true;
+			try {
+				response.sendRedirect("../html/admin.html");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			};
 		}
-		    
-		else
-			return false;
 	}
 	
-	@RequestMapping(value="/login2.do",method=RequestMethod.POST)
+	@RequestMapping(value="/getCsrfToken.do",method=RequestMethod.GET)
+	public String getCsrfToken(){
+		return "_csrf";
+	}
+	
+	/*@RequestMapping(value="/login2.do",method=RequestMethod.POST)
 	public String login2(@RequestParam("username2") String username,@RequestParam("password2") String password){
 		System.out.println("进入login2");
 		if(loginValid.loginValid(username, password)){
@@ -76,7 +68,7 @@ public class LoginController {
 			return "failed";
 		}
 			
-	}
+	}*/
 	
 	@RequestMapping(value="/logout.do",method=RequestMethod.GET)
 	public String logout(){

@@ -1,7 +1,7 @@
-package com.genie.dao.impl;
-/*author:Genie
+/*package com.genie.dao.impl;
+author:Genie
  *date:2017年4月11日
-**/
+*
 
 import java.util.List;
 
@@ -38,3 +38,4 @@ public class TLoginHomeTest {
 		assertEquals(password, "genie");
 	}
 }
+*/
