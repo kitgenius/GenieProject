@@ -4,16 +4,12 @@
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
-var token;
-var header;
-
 $(function () {
 	function getCsrfToken(){
 	   $.get("../ms/getCsrfToken.do",function(data){
 	            $("head").append(data);
-	            token = $("meta[name=‘_csrf‘]").attr("content");
-	            header = $("meta[name=‘_csrf_header‘]").attr("content");
-	            $("#csrf").attr({name:heaeder,value:token});
+	            var token = $("meta[name='_csrf']").attr("content");
+	            var header = $("meta[name='_csrf_header']").attr("content");
 	            $.ajaxSetup({
 	                 beforeSend: function (xhr) {
 	                  if(header && token ){
@@ -27,19 +23,15 @@ $(function () {
 	})
 
 	function login() {
-	    
+	    var token = $("meta[name='_csrf']").attr("content");
+	    var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajax({
 			//几个参数需要注意一下
 			type : "POST",//方法类型
 			dataType : "json",//预期服务器返回的数据类型
 			url : "/GenieProject/ms/login.do",//url
 			data : $('#loginForm').serialize(),
-			/* headers : {header:token}, */
-			beforeSend: function (xhr) {
-	                  if(header && token ){
-	                      xhr.setRequestHeader(header, token);
-	                  }
-	             },
+			headers : {header:token},
 			success : function(result) {
 				console.log(result);//打印服务端返回的数据(调试用)
 				if (result.resultCode == 200) {
@@ -56,14 +48,14 @@ $(function () {
 <title>GenieProject login</title>
 </head>
 <body>
-	<div id="loginForm">
-		<form onsubmit="return false" action="##" method="post">
+	<div>
+		<form id="loginForm">
 			<p>
 				<input type="text" name="username" value="genie">
 			<p>
 				<input type="password" name="password" value="genie">
 			<p>
-			<input type="hidden" name="" value="" id="csrf">
+			<!-- <input type="hidden" name="" value="" id="csrf"> -->
 				<input type="button" value="登陆" onclick="login()"> &nbsp;<input
 					type="reset" value="重置">
 			<p>

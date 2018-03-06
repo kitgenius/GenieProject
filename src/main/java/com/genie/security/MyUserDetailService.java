@@ -28,7 +28,7 @@ public class MyUserDetailService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Login login = (Login) hibernateDao.findByProperty(Login.class, Restrictions.eq("username", username)).get(0);
 		Collection<Role> roles = login.getRole();
-		
+		System.out.println("load user : " + username);
 		Collection<GrantedAuthority> auths = null;
 		if(login != null){
 			auths = new ArrayList<GrantedAuthority>();
