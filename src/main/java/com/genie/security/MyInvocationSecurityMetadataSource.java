@@ -37,7 +37,7 @@ public class MyInvocationSecurityMetadataSource implements FilterInvocationSecur
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 		//参数是要访问的url，返回这个url对应的所有权限（或角色）
 		String requestUrl = ((FilterInvocation)object).getRequestUrl();//获取请求的url
-		System.out.println(requestUrl);//临时调试
+		System.out.println("用户访问 ： " + requestUrl);//临时调试
 		
 		//查找所有url对应的角色
 		List<Auth> auths = hibernateDao.findAll(Auth.class);
@@ -52,7 +52,7 @@ public class MyInvocationSecurityMetadataSource implements FilterInvocationSecur
 				List<Role> roles = (List<Role>) auth.getRole();
 				for(Role role:roles){
 					String roleNameStr = role.getRoleName();
-					System.out.println("有权限的角色名：" + roleNameStr);
+					System.out.println("有权限访问该资源的角色名 ：" + roleNameStr);
 					ConfigAttribute ca = new SecurityConfig(roleNameStr);
 					atts.add(ca);
 				}

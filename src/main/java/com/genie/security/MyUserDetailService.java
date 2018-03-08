@@ -26,9 +26,9 @@ public class MyUserDetailService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		System.out.println("MyUserDetailService load user : " + username);
 		Login login = (Login) hibernateDao.findByProperty(Login.class, Restrictions.eq("username", username)).get(0);
 		Collection<Role> roles = login.getRole();
-		System.out.println("load user : " + username);
 		Collection<GrantedAuthority> auths = null;
 		if(login != null){
 			auths = new ArrayList<GrantedAuthority>();
@@ -39,7 +39,7 @@ public class MyUserDetailService implements UserDetailsService {
 			}
 		}
 		
-		User user = new User(username, login.getPassword(), true, true, true, true, auths);
+		User user = new User(username, login.getPassword(), auths);
 		
 		return user;
 	}
