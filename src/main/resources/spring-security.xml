@@ -17,9 +17,9 @@
 	<!-- 读库方式配置验证、授权 -->
 	<!-- <http pattern="/ms/login*.do" security="none" /> -->
 	<http auto-config="true" use-expressions="false">
-		<intercept-url pattern="/ms/login.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<!-- <intercept-url pattern="/ms/login.do" access="IS_AUTHENTICATED_ANONYMOUSLY" /> -->
 		<form-login login-page="/html/login.html"
-			username-parameter="username" password-parameter="password" />
+			username-parameter="username" password-parameter="password" login-processing-url="/ms/login.do"/>
 		<session-management>
 			<concurrency-control max-sessions="1"
 				error-if-maximum-exceeded="false" />
