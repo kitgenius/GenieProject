@@ -26,10 +26,10 @@ public class LoginController {
 	@Autowired
 	private HttpServletRequest request;
 	
-	@Autowired
-	private LoginValid loginValid;
+	/*@Autowired
+	private LoginValid loginValid;*/
 	
-	@RequestMapping(value="/login.do",method=RequestMethod.POST)
+	/*@RequestMapping(value="/login.do",method=RequestMethod.POST)
 	public void login(@RequestParam("username") String username, @RequestParam("password") String password,HttpServletResponse response){
 		if(loginValid.loginValid(username, password)){
 			HttpSession session = request.getSession();
@@ -44,7 +44,7 @@ public class LoginController {
 				e.printStackTrace();
 			};
 		}
-	}
+	}*/
 	
 	@RequestMapping(value="/getCsrfToken.do",method=RequestMethod.GET)
 	public String getCsrfToken(){

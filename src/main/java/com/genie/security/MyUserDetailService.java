@@ -28,12 +28,17 @@ public class MyUserDetailService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		System.out.println("MyUserDetailService load user : " + username);
 		Login login = (Login) hibernateDao.findByProperty(Login.class, Restrictions.eq("username", username)).get(0);
+		System.out.println(login.getUsername());
 		Collection<Role> roles = login.getRole();
+		for(Role role : roles){
+			System.out.println(role.getRoleName());
+		}
 		Collection<GrantedAuthority> auths = null;
 		if(login != null){
 			auths = new ArrayList<GrantedAuthority>();
 			if(roles.isEmpty() == false){
 				for(Role role:roles){
+					System.out.println("返回角色 ： " + role.getRoleName());
 					auths.add(new SimpleGrantedAuthority(role.getRoleName()));
 				}
 			}

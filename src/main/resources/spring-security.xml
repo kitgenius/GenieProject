@@ -19,7 +19,7 @@
 	<http auto-config="true" use-expressions="false">
 		<!-- <intercept-url pattern="/ms/login.do" access="IS_AUTHENTICATED_ANONYMOUSLY" /> -->
 		<form-login login-page="/html/login.html"
-			username-parameter="username" password-parameter="password" login-processing-url="/ms/login.do"/>
+			username-parameter="username" password-parameter="password" login-processing-url="/login.do" default-target-url="/html/index.html" />
 		<session-management>
 			<concurrency-control max-sessions="1"
 				error-if-maximum-exceeded="false" />

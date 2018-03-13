@@ -15,7 +15,7 @@ import com.genie.service.LoginValid;
  * date:2017年5月1日
  */
 
-@Service("loginValid")
+//@Service("loginValid")
 public class LoginValidImpl implements LoginValid {
 
 	@Autowired

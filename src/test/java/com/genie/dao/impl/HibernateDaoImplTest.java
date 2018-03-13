@@ -53,7 +53,7 @@ public class HibernateDaoImplTest {
 				assertEquals("管理员",role.getDescription());
 				break;
 			case 2 :
-				assertEquals("ROLE_USER",role.getRoleName());
+				assertEquals("ROLE_ORDINARY",role.getRoleName());
 				assertEquals("普通用户",role.getDescription());
 				break;
 			}
@@ -76,6 +76,17 @@ public class HibernateDaoImplTest {
 		List<Login> loginList = hibernateDao.findByProperty(Login.class, Restrictions.like("username", "test%"));
 		for(Login login:loginList){
 			System.out.println("login name is : " + login.getUsername());
+		}
+		System.out.println("another test");
+		List<Login> loginList2 = hibernateDao.findByProperty(Login.class, Restrictions.eq("username", "genie2"));
+		for(Login login2:loginList2){
+			System.out.println("login name is : " + login2.getUsername());
+			System.out.println("login password is : " + login2.getPassword());
+			List<Role> roles = (List<Role>) login2.getRole();
+			System.out.println("roles length : " + roles.toArray().length);
+			for(Role role : roles){
+				System.out.println(role.getRoleName());
+			}
 		}
 	}
 	
@@ -115,7 +126,7 @@ public class HibernateDaoImplTest {
 	
 	@Test
 	public void findByHQLQueryTest(){
-		String hqlStr = "select login.username from Login login where login.username like 'genie%'";
+		String hqlStr = "select login.username from Login login where login.username = 'genie2'";
 		List list = hibernateDao.findByHQLQuery(hqlStr);
 		Iterator it = list.iterator();
 		while(it.hasNext()){
