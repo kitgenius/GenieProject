@@ -15,12 +15,12 @@
       <property name="password" insert="true" update="true" lazy="false" optimistic-lock="true">
          <column name="password" sql-type="varchar(254)" length="254"/>
       </property>
-      <bag name="role" table="t_login_role" outer-join="true" lazy="false" optimistic-lock="true">
+      <bag name="role" table="t_login_role" outer-join="false" lazy="true" optimistic-lock="true">
       	<key>
-      		<column name="id" sql-type="int" not-null="true" length="0"/>
+      		<column name="login_id" sql-type="int" not-null="true" length="0"/>
       	</key>
       	<many-to-many class="com.genie.entity.Role" outer-join="false">
-      		<column name="role_id" sql-type="int" not-null="true" length="0"/>
+      		<column name="id" sql-type="int" not-null="true" length="0"/>
       	</many-to-many>
       </bag>
    </class>
