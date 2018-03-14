@@ -43,6 +43,10 @@ public class MyInvocationSecurityMetadataSource implements FilterInvocationSecur
 		List<Auth> auths = hibernateDao.findAll(Auth.class);
 		List<String> resourceUrls = new ArrayList<String>();
 		
+		if(auths.isEmpty() || auths == null){
+			return null;
+		}
+		
 		//根据角色设置相应的属性，返回。
 		Collection<ConfigAttribute> atts = new ArrayList<ConfigAttribute>();
 		

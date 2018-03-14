@@ -21,7 +21,9 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
 			throws AccessDeniedException, InsufficientAuthenticationException {
 		if(configAttributes == null){
-			return;
+			//return;
+			System.out.println("资源没有配置权限");
+			throw new AccessDeniedException("resource did not config auth");
 		}
 		
 		Iterator<ConfigAttribute> itCA = configAttributes.iterator();

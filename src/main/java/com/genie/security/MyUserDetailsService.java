@@ -19,7 +19,7 @@ import com.genie.entity.Role;
 /*author:Genie
  *date:2018年2月23日
 **/
-public class MyUserDetailService implements UserDetailsService {
+public class MyUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private HibernateDao hibernateDao;

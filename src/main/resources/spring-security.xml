@@ -6,6 +6,8 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 
+
+
 	<!-- 手动配置验证信息 -->
 	<!-- <http auto-config="true"> <intercept-url pattern="/memberManage/**" 
 		access="hasRole('ROLE_USER')" /> </http> -->
@@ -14,12 +16,21 @@
 		name="genie" password="genie" authorities="ROLE_USER" /> </user-service> 
 		</authentication-provider> </authentication-manager> -->
 
+    <!-- 手动配置验证信息  结束 -->
+
+	<!-- 不过滤的请求 -->
+	<!-- <http pattern="/login/*" security="none" /> -->
+	<!-- 不过滤的请求  结束-->
+
 	<!-- 读库方式配置验证、授权 -->
-	<!-- <http pattern="/ms/login*.do" security="none" /> -->
-	<http auto-config="true" use-expressions="false">
-		<!-- <intercept-url pattern="/ms/login.do" access="IS_AUTHENTICATED_ANONYMOUSLY" /> -->
+	<http auto-config="true" use-expressions="true">
+				
+		<!-- 在用户端保存cookie，不安全 -->
+        <!-- <remember-me /> -->
+        <!-- 在用户端保存cookie，不安全  结束-->
+        
 		<form-login login-page="/html/login.html"
-			username-parameter="username" password-parameter="password" login-processing-url="/login.do" default-target-url="/html/index.html" />
+			username-parameter="username" password-parameter="password" login-processing-url="/login/login.do" default-target-url="/login/index.do" />
 		<session-management>
 			<concurrency-control max-sessions="1"
 				error-if-maximum-exceeded="false" />
@@ -35,14 +46,16 @@
 	</beans:bean>
 
 	<authentication-manager alias="authenticationManager">
-		<authentication-provider user-service-ref="myUserDetailService">
+		<authentication-provider user-service-ref="myUserDetailsService">
 			<!-- <password-encoder hash="md5"></password-encoder> -->
 		</authentication-provider>
 	</authentication-manager>
 
-	<beans:bean id="myUserDetailService" class="com.genie.security.MyUserDetailService"></beans:bean>
+	<beans:bean id="myUserDetailsService" class="com.genie.security.MyUserDetailsService"></beans:bean>
 	<beans:bean id="myAccessDecisionManager" class="com.genie.security.MyAccessDecisionManager"></beans:bean>
 	<beans:bean id="securityMetadataSource"
 		class="com.genie.security.MyInvocationSecurityMetadataSource"></beans:bean>
-
+    
+    <!-- 读库方式配置验证、授权  结束-->
+    
 </beans:beans>

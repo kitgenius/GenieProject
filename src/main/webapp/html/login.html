@@ -6,7 +6,7 @@
 <script type="text/javascript">
 $(function () {
 	function getCsrfToken(){
-	   $.get("../ms/getCsrfToken.do",function(data){
+	   $.get("/GenieProject/login/getCsrfToken.do",function(data){
 	            $("head").append(data);
 	            var token = $("meta[name='_csrf']").attr("content");
 	            var header = $("meta[name='_csrf_header']").attr("content");
@@ -29,13 +29,15 @@ $(function () {
 			//几个参数需要注意一下
 			type : "POST",//方法类型
 			dataType : "json",//预期服务器返回的数据类型
-			url : "/GenieProject/login.do",//url
+			url : "/GenieProject/login/login.do",//url
 			data : $('#loginForm').serialize(),
 			headers : {header:token},
 			success : function(result) {
 				console.log(result);//打印服务端返回的数据(调试用)
 				if (result.resultCode == 200) {
 					alert("SUCCESS");
+				}else if (result.resultCode == 302){
+					alert("redirect");
 				}
 				;
 			},
@@ -73,12 +75,12 @@ $(function () {
 		</form>
 	</div> -->
 	<div>
-		<a href="/GenieProject/ms/userInfo.do"><input type="button"
+		<a href="/GenieProject/user/userInfo.do"><input type="button"
 			name="userInfoBtn" value="用户信息"></a>
 	</div>
 	<p>
 	<div>
-		<a href="/GenieProject/ms/logout.do"><input type="button"
+		<a href="/GenieProject/login/logout.do"><input type="button"
 			name="userILogoutBtn" value="用户退出"></a>
 	</div>
 </body>

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +22,7 @@ import com.genie.service.LoginValid;
 
 
 @Controller
-@RequestMapping(value="/ms")
+@RequestMapping(value="/login")
 public class LoginController {
 	
 	@Autowired
@@ -46,7 +48,8 @@ public class LoginController {
 		}
 	}*/
 	
-	@RequestMapping(value="/getCsrfToken.do",method=RequestMethod.GET)
+	//获取spring security的csrf token
+	@RequestMapping(value="/getCsrfToken",method=RequestMethod.GET)
 	public String getCsrfToken(){
 		return "_csrf";
 	}
@@ -77,13 +80,22 @@ public class LoginController {
 		return "redirect:/html/login.html";
 	}
 	
+	@RequestMapping(value="index.do",method=RequestMethod.GET)
+	public String index(){
+		HttpSession session = request.getSession();
+		return "redirect:/html/index.html";
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="/userInfo.do",method=RequestMethod.GET)
 	public String userInfo(){
 		HttpSession session = request.getSession();
 		
 		System.out.println("session is :" + session.getId());
-		return "userInfo";
-		
+		//return "userInfo";
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String usernameStr = userDetails.getUsername();
+		return "Hello " + usernameStr;
 	}
 
 }

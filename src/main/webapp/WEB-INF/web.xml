@@ -61,7 +61,7 @@
 
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
 
 	<!-- spring监听器，监听servletContext，读取contextConfigLocation的配置信息 -->
