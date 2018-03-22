@@ -20,7 +20,11 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
 	@Override
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
 			throws AccessDeniedException, InsufficientAuthenticationException {
-		if(configAttributes == null){
+		
+		System.out.println("configAttributes的大小是：" + configAttributes.size());
+		
+		
+		if(configAttributes == null || configAttributes.isEmpty() || configAttributes.size() == 0){
 			//return;
 			System.out.println("资源没有配置权限");
 			throw new AccessDeniedException("resource did not config auth");

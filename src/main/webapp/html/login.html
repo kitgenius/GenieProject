@@ -6,7 +6,7 @@
 <script type="text/javascript">
 $(function () {
 	function getCsrfToken(){
-	   $.get("/GenieProject/login/getCsrfToken.do",function(data){
+	   $.get("/GenieProject/login/getCsrfToken",function(data){
 	            $("head").append(data);
 	            var token = $("meta[name='_csrf']").attr("content");
 	            var header = $("meta[name='_csrf_header']").attr("content");

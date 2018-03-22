@@ -16,6 +16,18 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`geniedb` /*!40100 DEFAULT CHARACTER SET
 
 USE `geniedb`;
 
+/*Table structure for table `t_area` */
+
+DROP TABLE IF EXISTS `t_area`;
+
+CREATE TABLE `t_area` (
+  `id` int(11) DEFAULT NULL,
+  `areaName` varchar(16) DEFAULT NULL COMMENT '区域名',
+  `parentId` int(11) DEFAULT NULL COMMENT '父区域id'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `t_area` */
+
 /*Table structure for table `t_auth` */
 
 DROP TABLE IF EXISTS `t_auth`;
@@ -26,9 +38,11 @@ CREATE TABLE `t_auth` (
   `authPath` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_auth` */
+
+insert  into `t_auth`(`id`,`authName`,`authPath`,`description`) values (3,'testadminhtml','/html/admin.html',NULL),(4,'testuserhtml','/html/user.html',NULL),(5,'testindexhtml','/html/index.html',NULL),(6,'testuserdo','/user/.*',NULL);
 
 /*Table structure for table `t_child` */
 
@@ -43,11 +57,11 @@ CREATE TABLE `t_child` (
   `sex` enum('male','female') DEFAULT NULL COMMENT '性别',
   `specialty` varchar(100) DEFAULT NULL COMMENT '特长',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_child` */
 
-insert  into `t_child`(`id`,`personId`,`childName`,`parentId`,`birthday`,`sex`,`specialty`) values (2,NULL,'boy1',6,NULL,'male',NULL);
+insert  into `t_child`(`id`,`personId`,`childName`,`parentId`,`birthday`,`sex`,`specialty`) values (2,NULL,'boy1',6,NULL,'male',NULL),(3,NULL,'girl2',7,NULL,'female',NULL),(4,NULL,'girl2',8,NULL,'female',NULL);
 
 /*Table structure for table `t_child_organ` */
 
@@ -58,9 +72,11 @@ CREATE TABLE `t_child_organ` (
   `childId` int(11) DEFAULT NULL COMMENT '小孩id',
   `organId` int(11) DEFAULT NULL COMMENT '机构id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_child_organ` */
+
+insert  into `t_child_organ`(`id`,`childId`,`organId`) values (1,2,1);
 
 /*Table structure for table `t_contact` */
 
@@ -69,6 +85,7 @@ DROP TABLE IF EXISTS `t_contact`;
 CREATE TABLE `t_contact` (
   `id` int(11) NOT NULL,
   `address` varchar(100) DEFAULT NULL COMMENT '地址',
+  `areaId` int(11) DEFAULT NULL COMMENT '区域id',
   `telephone` varchar(14) DEFAULT NULL COMMENT '电话',
   `qq` varchar(20) DEFAULT NULL COMMENT 'qq',
   `wechat` varchar(50) DEFAULT NULL COMMENT '微信',
@@ -104,11 +121,26 @@ CREATE TABLE `t_login` (
   `username` varchar(20) NOT NULL,
   `password` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_login` */
 
-insert  into `t_login`(`id`,`username`,`password`) values (1,'genie','genie'),(10,'junitTestPersist','password'),(11,'junitTestMerge','password'),(12,'junitTestAttachDirty','password'),(13,'junitTestAttachClean','password'),(15,'junitTestMerge','password'),(16,'test1','test1'),(17,'test2','test2'),(18,'test3','test2');
+insert  into `t_login`(`id`,`username`,`password`) values (1,'genie','genie'),(10,'junitTestPersist','password'),(11,'junitTestMerge','password'),(12,'junitTestAttachDirty','password'),(13,'junitTestAttachClean','password'),(15,'junitTestMerge','password'),(16,'test1','test1'),(17,'test2','test2'),(18,'test3','test2'),(19,'genie2','genie2'),(21,'saveTest','saveTest2');
+
+/*Table structure for table `t_login_role` */
+
+DROP TABLE IF EXISTS `t_login_role`;
+
+CREATE TABLE `t_login_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `login_id` int(11) DEFAULT NULL,
+  `role_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+/*Data for the table `t_login_role` */
+
+insert  into `t_login_role`(`id`,`login_id`,`role_id`) values (1,1,1),(2,19,2);
 
 /*Table structure for table `t_organ` */
 
@@ -120,9 +152,11 @@ CREATE TABLE `t_organ` (
   `parentOrganId` int(11) DEFAULT NULL COMMENT '父机构id',
   `contactId` int(11) DEFAULT NULL COMMENT '联系方式',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_organ` */
+
+insert  into `t_organ`(`id`,`organName`,`parentOrganId`,`contactId`) values (1,'organ1',NULL,NULL);
 
 /*Table structure for table `t_parent` */
 
@@ -135,11 +169,11 @@ CREATE TABLE `t_parent` (
   `sex` enum('male','female') DEFAULT NULL,
   `contactId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_parent` */
 
-insert  into `t_parent`(`id`,`personId`,`parentName`,`sex`,`contactId`) values (6,NULL,'parent1','male',1);
+insert  into `t_parent`(`id`,`personId`,`parentName`,`sex`,`contactId`) values (6,NULL,'parent1','male',1),(7,NULL,'parent2','male',1),(8,NULL,'parent2','male',1);
 
 /*Table structure for table `t_role` */
 
@@ -150,11 +184,11 @@ CREATE TABLE `t_role` (
   `roleName` varchar(16) NOT NULL,
   `description` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_role` */
 
-insert  into `t_role`(`id`,`roleName`,`description`) values (1,'administrator','admin');
+insert  into `t_role`(`id`,`roleName`,`description`) values (1,'ROLE_ADMIN','管理员'),(2,'ROLE_ORDINARY','普通用户'),(3,'ROLE_USER','测试');
 
 /*Table structure for table `t_role_auth` */
 
@@ -165,9 +199,11 @@ CREATE TABLE `t_role_auth` (
   `role_id` int(11) NOT NULL,
   `auth_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_role_auth` */
+
+insert  into `t_role_auth`(`id`,`role_id`,`auth_id`) values (3,1,3),(4,1,4),(5,2,4),(6,1,5),(7,2,5),(8,1,6);
 
 /*Table structure for table `t_userinfo` */
 

@@ -19,12 +19,13 @@
     <!-- 手动配置验证信息  结束 -->
 
 	<!-- 不过滤的请求 -->
-	<!-- <http pattern="/login/*" security="none" /> -->
+	<!-- <http pattern="/html/*" security="none" /> -->
 	<!-- 不过滤的请求  结束-->
 
 	<!-- 读库方式配置验证、授权 -->
 	<http auto-config="true" use-expressions="true">
-				
+		<!-- <intercept-url pattern="/login/*" access="permitAll"/> -->
+		<!-- <intercept-url pattern="/**" access="isAuthenticated()"/> -->
 		<!-- 在用户端保存cookie，不安全 -->
         <!-- <remember-me /> -->
         <!-- 在用户端保存cookie，不安全  结束-->
@@ -36,6 +37,7 @@
 				error-if-maximum-exceeded="false" />
 		</session-management>
 		<custom-filter ref="myFilter" before="FILTER_SECURITY_INTERCEPTOR" />
+
 	</http>
 
 	<beans:bean id="myFilter"
