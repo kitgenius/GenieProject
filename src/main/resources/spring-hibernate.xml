@@ -33,10 +33,6 @@
 		<property name="mappingResources">
 			<list>
 				<value>./hbm/Login.hbm.xml</value>
-				<value>./hbm/UserInfo.hbm.xml</value>
-				<value>./hbm/Parent.hbm.xml</value>
-				<value>./hbm/Child.hbm.xml</value>
-				<value>./hbm/Organ.hbm.xml</value>
 				<value>./hbm/Auth.hbm.xml</value>
 				<value>./hbm/Role.hbm.xml</value>
 			</list>

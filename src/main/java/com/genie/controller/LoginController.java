@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.genie.service.LoginValid;
 
 
 @Controller
@@ -28,50 +27,11 @@ public class LoginController {
 	@Autowired
 	private HttpServletRequest request;
 	
-	/*@Autowired
-	private LoginValid loginValid;*/
-	
-	/*@RequestMapping(value="/login.do",method=RequestMethod.POST)
-	public void login(@RequestParam("username") String username, @RequestParam("password") String password,HttpServletResponse response){
-		if(loginValid.loginValid(username, password)){
-			HttpSession session = request.getSession();
-			if(session.getAttribute("username") == null){
-				session.setAttribute("username", username);
-				request.changeSessionId();
-			}
-			try {
-				response.sendRedirect("../html/admin.html");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			};
-		}
-	}*/
-	
 	//获取spring security的csrf token
 	@RequestMapping(value="/getCsrfToken",method=RequestMethod.GET)
 	public String getCsrfToken(){
 		return "_csrf";
 	}
-	
-	/*@RequestMapping(value="/login2.do",method=RequestMethod.POST)
-	public String login2(@RequestParam("username2") String username,@RequestParam("password2") String password){
-		System.out.println("进入login2");
-		if(loginValid.loginValid(username, password)){
-			HttpSession session = request.getSession();
-			if(session.getAttribute("username") == null){
-				session.setAttribute("username", username);
-				session.setAttribute("oldSessionId", session.getId());
-				request.changeSessionId();
-				session.setAttribute("newSessionId", session.getId());
-			}
-			return "loginInfo";
-		}
-		else{
-			return "failed";
-		}
-			
-	}*/
 	
 	@RequestMapping(value="/logout.do",method=RequestMethod.GET)
 	public String logout(){

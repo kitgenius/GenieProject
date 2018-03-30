@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 /*author:Genie
  *date:2017年5月29日
+ *配置spring security之后不用
 **/
 public class AuthenticationFilter implements Filter {
 

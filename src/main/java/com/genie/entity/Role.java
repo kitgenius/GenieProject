@@ -8,18 +8,29 @@ package com.genie.entity;
 
 import java.util.*;
 
-/** @pdOid 96a1c8ef-eded-4cfa-b569-05ded798c2ba */
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+/** 角色 */
+@Entity
+@Table(name="t_role")
 public class Role implements java.io.Serializable {
-   /** @pdOid 7a3daa4f-55c4-4c25-97ea-2794c25132e9 */
+   /** id，主键 */
    public int id;
-   /** @pdOid 383912ef-98b9-41b1-831d-059f0213c1b2 */
+   /** 角色名称 */
    public java.lang.String roleName;
-   /** @pdOid e60cd72d-3749-43b7-9f3d-99e031b0334a */
+   /** 角色描述 */
    public java.lang.String description;
    
-   /** @pdRoleInfo migr=no name=Auth assc=relationship3 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
+   /** 授权，按路径授权  */
    public java.util.Collection<Auth> auth;
-   /** @pdRoleInfo migr=no name=Login assc=relationship2 coll=java.util.Collection impl=java.util.HashSet mult=0..* side=A */
+   /** 后台登陆账号 */
    public java.util.Collection<Login> login;
    
    /**
@@ -33,6 +44,7 @@ public class Role implements java.io.Serializable {
    /**
     * @pdGenerated default getter
     */
+   @ManyToMany(targetEntity=com.genie.entity.Auth.class,cascade={CascadeType.PERSIST,CascadeType.MERGE})
    public java.util.Collection<Auth> getAuth() {
       if (auth == null)
          auth = new java.util.HashSet<Auth>();
@@ -106,6 +118,7 @@ public class Role implements java.io.Serializable {
    /**
     * @pdGenerated default getter
     */
+   @ManyToMany(targetEntity=com.genie.entity.Login.class)
    public java.util.Collection<Login> getLogin() {
       if (login == null)
          login = new java.util.HashSet<Login>();
@@ -182,6 +195,9 @@ public class Role implements java.io.Serializable {
     *
     * @return id 
     */
+   @Id
+   @Column(name="id")
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
    public int getId()
    {
       return id;
@@ -202,6 +218,7 @@ public class Role implements java.io.Serializable {
     *
     * @return roleName 
     */
+   @Column(name="roleName",nullable=false)
    public java.lang.String getRoleName()
    {
       return roleName;
@@ -222,6 +239,7 @@ public class Role implements java.io.Serializable {
     *
     * @return description 
     */
+   @Column(name="description")
    public java.lang.String getDescription()
    {
       return description;
@@ -237,25 +255,6 @@ public class Role implements java.io.Serializable {
       this.description = newDescription;
    }
    
-   /**
-    * Get value of rolePK.
-    *
-    * @return rolePK object
-    */
-   public RolePK getRolePK() {
-      return new RolePK(id);
-   }
-   
-   /**
-    * Set value of rolePK.
-    * 
-    * @param pk
-    */
-   public void setRolePK(RolePK pk) {
-      if (pk != null) {
-         this.id = pk.getId();
-      }
-   }
    
    /* (non-Javadoc)
     * @see java.lang.Object#equals(java.lang.Object)
