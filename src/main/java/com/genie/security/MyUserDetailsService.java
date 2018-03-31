@@ -12,8 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.genie.dao.HibernateDao;
-import com.genie.entity.Login;
+import com.genie.dao.HibernateDaoOld;
+import com.genie.entity.ManagerUser;
 import com.genie.entity.Role;
 
 /*author:Genie
@@ -22,12 +22,12 @@ import com.genie.entity.Role;
 public class MyUserDetailsService implements UserDetailsService {
 
 	@Autowired
-	private HibernateDao hibernateDao;
+	private HibernateDaoOld hibernateDao;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		System.out.println("MyUserDetailService load user : " + username);
-		Login login = (Login) hibernateDao.findByProperty(Login.class, Restrictions.eq("username", username)).get(0);
+		ManagerUser login = (ManagerUser) hibernateDao.findByProperty(ManagerUser.class, Restrictions.eq("username", username)).get(0);
 		System.out.println(login.getUsername());
 		Collection<Role> roles = login.getRole();
 		for(Role role : roles){

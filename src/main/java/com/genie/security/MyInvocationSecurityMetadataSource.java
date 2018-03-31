@@ -15,7 +15,7 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.test.web.servlet.htmlunit.UrlRegexRequestMatcher;
 
-import com.genie.dao.HibernateDao;
+import com.genie.dao.HibernateDaoOld;
 import com.genie.entity.Auth;
 import com.genie.entity.Role;
 
@@ -25,7 +25,7 @@ import com.genie.entity.Role;
 public class MyInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
 	@Autowired
-	private HibernateDao hibernateDao;//后续要修改成service
+	private HibernateDaoOld hibernateDao;//后续要修改成service
 	
 	/*private static Map<String, Collection<ConfigAttribute>> resourceMap = null;*/
 	

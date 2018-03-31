@@ -18,33 +18,38 @@ import javax.persistence.Table;
 
 /** 后台用户登陆账号 */
 @Entity
-@Table(name="t_login")
-public class Login implements java.io.Serializable {
+@Table(name="t_managerUser")
+public class ManagerUser implements java.io.Serializable {
 	/** id，主键 */
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int id;
 	/** 用户名 */
+	@Column(name = "username", nullable=false)
 	public java.lang.String username;
 	/** 密码 */
+	@Column(name = "username" , nullable=false)
 	public java.lang.String password;
 
 	/**
 	 * @pdRoleInfo migr=no name=Role assc=角色关联关系 coll=java.util.Collection
 	 *             impl=java.util.HashSet mult=0..*
 	 */
+	@ManyToMany(targetEntity = com.genie.entity.Role.class)
 	public java.util.Collection<Role> role;
 
 	/**
 	 * Empty constructor which is required by Hibernate
 	 *
 	 */
-	public Login() {
+	public ManagerUser() {
 		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * @pdGenerated default getter
 	 */
-	@ManyToMany(targetEntity = com.genie.entity.Role.class)
 	public java.util.Collection<Role> getRole() {
 		if (role == null)
 			role = new java.util.HashSet<Role>();
@@ -80,7 +85,7 @@ public class Login implements java.io.Serializable {
 			this.role = new java.util.HashSet<Role>();
 		if (!this.role.contains(newRole)) {
 			this.role.add(newRole);
-			newRole.addLogin(this);
+			newRole.addMan(this);
 		}
 	}
 
@@ -103,9 +108,6 @@ public class Login implements java.io.Serializable {
 	 *
 	 * @return id
 	 */
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int getId() {
 		return id;
 	}
@@ -124,7 +126,6 @@ public class Login implements java.io.Serializable {
 	 *
 	 * @return username
 	 */
-	@Column(name = "username", nullable=false)
 	public java.lang.String getUsername() {
 		return username;
 	}
@@ -143,7 +144,6 @@ public class Login implements java.io.Serializable {
 	 *
 	 * @return password
 	 */
-	@Column(name = "username" , nullable=false)
 	public java.lang.String getPassword() {
 		return password;
 	}
@@ -170,10 +170,10 @@ public class Login implements java.io.Serializable {
 		if (other == this)
 			return true;
 
-		if (!(other instanceof Login))
+		if (!(other instanceof ManagerUser))
 			return false;
 
-		Login cast = (Login) other;
+		ManagerUser cast = (ManagerUser) other;
 
 		if (this.id != cast.getId())
 			return false;
