@@ -44,7 +44,7 @@ public interface GenericDao<T, PK extends Serializable> {
 	 * @return
 	 *
 	 */
-	public T get(Serializable id);
+	public T findAll(Serializable id);
 
 	/**
 	 * 
@@ -78,7 +78,7 @@ public interface GenericDao<T, PK extends Serializable> {
 	 * @param pValue
 	 * @return
 	 */
-	public T getUniqueByProperty(String pName, Object pValue);
+	public T findUniqueByProperty(String pName, Object pValue);
 
 	/**
 	 * 根据多个属性查询，取结果集合中的第0个结果
@@ -87,7 +87,7 @@ public interface GenericDao<T, PK extends Serializable> {
 	 * @param strs
 	 * @return
 	 */
-	public T getUniqueByNProperty(Object... strs);
+	public T findUniqueByNProperty(Object... strs);
 
 	/**
 	 * 根据HQL查询，取结果集合中的第0个结果
@@ -95,7 +95,7 @@ public interface GenericDao<T, PK extends Serializable> {
 	 * @param hql
 	 * @return
 	 */
-	public T getUniqueByHql(String hql, Object... values);
+	public T findUniqueByHql(String hql, Object... values);
 
 	/**
 	 * 根据SQL查询，取结果集合中的第0个结果
@@ -104,13 +104,15 @@ public interface GenericDao<T, PK extends Serializable> {
 	 * @param clazz
 	 * @return
 	 */
-	public T getUniqueBySql(String sql, Object... values);
+	public T findUniqueBySql(String sql, Object... values);
 
 	/**
-	 * 查询所有
+	 * 根据对象查询 全部
+	 * @param entity
+	 * @return
 	 */
-	public List<T> getList();
-
+	List<T> findByExample(T entity);
+	
 	/**
 	 * 根据属性查询 全部
 	 * 
@@ -118,7 +120,7 @@ public interface GenericDao<T, PK extends Serializable> {
 	 * @param pValue
 	 * @return
 	 */
-	public List<T> getListByProperty(String pName, Object pValue);
+	public List<T> findByProperty(String pName, Object pValue);
 
 	/**
 	 * 根据属性和条件查询 全部
@@ -128,7 +130,7 @@ public interface GenericDao<T, PK extends Serializable> {
 	 * @param condition
 	 * @return
 	 */
-	public List<T> getListByProperty(String pName, Object pValue, String condition);
+	public List<T> findByProperty(String pName, Object pValue, String condition);
 
 	/**
 	 * 根据多个属性模糊查询
@@ -136,7 +138,7 @@ public interface GenericDao<T, PK extends Serializable> {
 	 * @param strs
 	 * @return
 	 */
-	public List<T> getListByNProperty(Object... strs);
+	public List<T> findByNProperty(Object... strs);
 
 	/**
 	 * 根据HQL查询 全部
@@ -144,7 +146,7 @@ public interface GenericDao<T, PK extends Serializable> {
 	 * @param hql
 	 * @return
 	 */
-	public List<T> getListByHql(String hql, Object... values);
+	public List<T> findByHql(String hql, Object... values);
 
 	/**
 	 * 根据SQL查询全部
@@ -153,7 +155,7 @@ public interface GenericDao<T, PK extends Serializable> {
 	 * @param clazz
 	 * @return
 	 */
-	public List<T> getListBySql(String sql, Object... values);
+	public List<T> findBySql(String sql, Object... values);
 
 	/**
 	 * 
@@ -177,6 +179,8 @@ public interface GenericDao<T, PK extends Serializable> {
 	 */
 	public void initEntity(List<T> entityList);
 
+	
+	
 	/**
 	 * 
 	 * Description : 按HQL查询对象列表

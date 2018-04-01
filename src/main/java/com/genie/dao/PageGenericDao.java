@@ -5,14 +5,13 @@ import java.util.List;
 import java.util.Map;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
-import com.genie.dao.PropertyFilter;
 
 /**
  * 
  * @Description : 分页查询DAO接口类
  * @author cc
  */
-public interface PageGenericDao<T, PK extends Serializable> extends GenericDaoOld<T, PK> {
+public interface PageGenericDao<T, PK extends Serializable> extends GenericDao<T, PK> {
 
 	/**
 	 * 
@@ -53,19 +52,6 @@ public interface PageGenericDao<T, PK extends Serializable> extends GenericDaoOl
 	 *
 	 */
 	public Page<T> queryPage(final Page<T> page, final Criterion... criterions);
-
-	/**
-	 * 
-	 * Description : 按属性过滤条件列表分页查找对象
-	 *
-	 * @param page
-	 *            分页对象
-	 * @param filters
-	 *            属性过滤条件
-	 * @return
-	 *
-	 */
-	public Page<T> queryPage(final Page<T> page, final List<PropertyFilter> filters);
 
 	/**
 	 * 

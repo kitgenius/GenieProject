@@ -26,14 +26,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.genie.dao.DaoException;
-import com.genie.dao.HibernateDaoOld;
+import com.genie.dao.HibernateDao;
 
 /**
  * Class that implements <Code>HibernateDao</Code> interface.
  *
  */
 @Repository("hibernateDao")
-public class HibernateDaoOldImpl implements HibernateDaoOld {
+public class HibernateDaoImpl implements HibernateDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -43,12 +43,12 @@ public class HibernateDaoOldImpl implements HibernateDaoOld {
 	//命名缓存区域
 	private String queryCacheRegion;
 	
-	private Log log = LogFactory.getLog(HibernateDaoOldImpl.class);
+	private Log log = LogFactory.getLog(HibernateDaoImpl.class);
 
 	/*
 	 * Empty constructor
 	 */
-	public HibernateDaoOldImpl() {
+	public HibernateDaoImpl() {
 		super();
 	}
 
@@ -88,7 +88,7 @@ public class HibernateDaoOldImpl implements HibernateDaoOld {
 	/*
 	 * 根据某个持久化对象查询
 	 */
-	public List queryByExample(Class clazz, Object persistentObject) throws DaoException {
+	public List findByExample(Class clazz, Object persistentObject) throws DaoException {
 		List objs = new ArrayList();
 
 		try {

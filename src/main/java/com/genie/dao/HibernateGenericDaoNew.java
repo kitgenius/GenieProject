@@ -22,7 +22,7 @@ import org.springframework.util.Assert;
  * @Description : Hibernate基础查询DAO接口类
  * @author cc
  */
-public class HibernateGenericDao<T, PK extends Serializable> implements GenericDaoOld<T, PK> {
+public class HibernateGenericDaoNew<T, PK extends Serializable> implements GenericDaoOld<T, PK> {
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -39,7 +39,7 @@ public class HibernateGenericDao<T, PK extends Serializable> implements GenericD
 	 * @return
 	 * 
 	 */
-	public HibernateGenericDao() {
+	public HibernateGenericDaoNew() {
 		this.entityClass = ReflectionUtils.getSuperClassGenricType(getClass());
 	}
 
@@ -54,7 +54,7 @@ public class HibernateGenericDao<T, PK extends Serializable> implements GenericD
 	 * @return
 	 * 
 	 */
-	public HibernateGenericDao(final SessionFactory sessionFactory, final Class<T> entityClass) {
+	public HibernateGenericDaoNew(final SessionFactory sessionFactory, final Class<T> entityClass) {
 		logger.debug("初始化sessionFactory");
 		this.sessionFactory = sessionFactory;
 		this.entityClass = entityClass;
