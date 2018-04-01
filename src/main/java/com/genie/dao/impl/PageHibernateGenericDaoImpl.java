@@ -1,25 +1,68 @@
 package com.genie.dao.impl;
 
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.criterion.Criterion;
 
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.genie.dao.DaoException;
 import com.genie.dao.Page;
 import com.genie.dao.PageGenericDao;
 
 /*author:Genie
  *date:2018年4月1日
 **/
-public class PageHibernateDaoImpl<T, PK extends Serializable> extends HibernateDaoImpl implements PageGenericDao<T, PK> {
+public class PageHibernateGenericDaoImpl<T, PK extends Serializable> extends HibernateDaoImpl implements PageGenericDao<T, PK> {
 
+	protected Logger logger = LoggerFactory.getLogger(getClass());
+	
+	// 实体类对象
+	protected Class<T> entityClass;
+		
+	
+	
+	public PageHibernateGenericDaoImpl() {
+		Type genType = getClass().getGenericSuperclass();
+
+		if (!(genType instanceof ParameterizedType)) {
+			logger.warn(getClass() + "'s superclass not ParameterizedType");
+			entityClass = (Class<T>) Object.class;
+		}else{
+			Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
+
+			if (params[0] instanceof Class) {
+				entityClass = (Class<T>) params[0];
+			}
+			else{
+				logger.warn(getClass() + " not set the actual class on superclass generic parameter");
+				entityClass = (Class<T>) Object.class;
+			}
+		}
+
+		
+	}
+
+	public PageHibernateGenericDaoImpl(final SessionFactory sessionFactory, final Class<T> entityClass) {
+		logger.debug("初始化sessionFactory");
+		this.entityClass = entityClass;
+	}
+	
 	@Override
-	public T get(Serializable id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<T> findAll() {
+		return super.findAll(entityClass.getClass());
 	}
 
 	@Override
@@ -27,63 +70,69 @@ public class PageHibernateDaoImpl<T, PK extends Serializable> extends HibernateD
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public T findById(Serializable id){
+		Restrictions.eq("id", "id");
+		return null;
+	}
 
 	@Override
-	public T getUniqueByProperty(String pName, Object pValue) {
+	public T findUniqueByProperty(String pName, Object pValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public T getUniqueByNProperty(Object... strs) {
+	public T findUniqueByNProperty(Object... strs) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public T getUniqueByHql(String hql, Object... values) {
+	public T findUniqueByHql(String hql, Object... values) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public T getUniqueBySql(String sql, Object... values) {
+	public T findUniqueBySql(String sql, Object... values) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<T> getList() {
+	public List<T> findByExample(T entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<T> getListByProperty(String pName, Object pValue) {
+	public List<T> findByProperty(String pName, Object pValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<T> getListByProperty(String pName, Object pValue, String condition) {
+	public List<T> findByProperty(String pName, Object pValue, String condition) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<T> getListByNProperty(Object... strs) {
+	public List<T> findByNProperty(Object... strs) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<T> getListByHql(String hql, Object... values) {
+	public List<T> findByHql(String hql, Object... values) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<T> getListBySql(String sql, Object... values) {
+	public List<T> findBySql(String sql, Object... values) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -98,12 +147,6 @@ public class PageHibernateDaoImpl<T, PK extends Serializable> extends HibernateD
 	public void initEntity(List<T> entityList) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public List<T> queryByExample(T entity) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -173,7 +216,7 @@ public class PageHibernateDaoImpl<T, PK extends Serializable> extends HibernateD
 	}
 
 	@Override
-	public List<Map<String, Object>> queryListBysql(String queryString, Object... values) {
+	public List<Map<String, Object>> findBysql(String queryString, Object... values) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -214,4 +257,5 @@ public class PageHibernateDaoImpl<T, PK extends Serializable> extends HibernateD
 		return 0;
 	}
 
+	
 }

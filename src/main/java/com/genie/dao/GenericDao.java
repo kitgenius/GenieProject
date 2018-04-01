@@ -44,7 +44,7 @@ public interface GenericDao<T, PK extends Serializable> {
 	 * @return
 	 *
 	 */
-	public T findAll(Serializable id);
+	public T findAll();
 
 	/**
 	 * 
@@ -70,6 +70,8 @@ public interface GenericDao<T, PK extends Serializable> {
 	 * @param id
 	 */
 	public void deleteById(Serializable id);
+	
+	public T findById(Serializable id);
 
 	/**
 	 * 根据属性查询，取结果集合中的第0个结果
@@ -314,5 +316,5 @@ public interface GenericDao<T, PK extends Serializable> {
 	 * @return
 	 *
 	 */
-	public List<Map<String, Object>> queryListBysql(String queryString, Object... values);
+	public List<Map<String, Object>> findBysql(String queryString, Object... values);
 }

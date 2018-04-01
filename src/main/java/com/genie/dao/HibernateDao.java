@@ -25,6 +25,8 @@ public interface HibernateDao {
    public List findByExample(Class clazz, Object persistentObject) throws DaoException;
    
    public List findAll(Class clazz) throws DaoException;
+   
+   public List findAll(final Class entityClass, final int firstResult, final int maxResult) throws DaoException;
 
    public List findByProperty(Class clazz, Criterion restriction) throws DaoException;
 
@@ -72,7 +74,4 @@ public interface HibernateDao {
 
    public List find(final String queryString, final Object[] values, final int firstResult, final int maxResult) throws DaoException;
 
-   public List loadAll(final Class entityClass) throws DaoException;
-
-   public List loadAll(final Class entityClass, final int firstResult, final int maxResult) throws DaoException;
 }

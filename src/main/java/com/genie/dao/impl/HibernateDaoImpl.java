@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -22,6 +20,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -43,7 +43,7 @@ public class HibernateDaoImpl implements HibernateDao {
 	//命名缓存区域
 	private String queryCacheRegion;
 	
-	private Log log = LogFactory.getLog(HibernateDaoImpl.class);
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	/*
 	 * Empty constructor
@@ -67,7 +67,7 @@ public class HibernateDaoImpl implements HibernateDao {
 			Session session = getSession();
 			session.update(persistentObject);
 		} catch (HibernateException ex) {
-			log.error("Fail to update", ex);
+			logger.error("Fail to update", ex);
 			throw new DaoException("Fail to update", ex);
 		}
 	}
@@ -80,7 +80,7 @@ public class HibernateDaoImpl implements HibernateDao {
 			Session session = getSession();
 			session.delete(persistentObject);
 		} catch (HibernateException ex) {
-			log.error("Fail to delete", ex);
+			logger.error("Fail to delete", ex);
 			throw new DaoException("Fail tlo delete", ex);
 		}
 	}
@@ -95,7 +95,7 @@ public class HibernateDaoImpl implements HibernateDao {
 			Session session = this.getSession();
 			objs = session.createCriteria(clazz).add(Example.create(persistentObject)).list();
 		} catch (HibernateException ex) {
-			log.error("Fail to find all  objects", ex);
+			logger.error("Fail to find all  objects", ex);
 			throw new DaoException("Fail to find all  objects", ex);
 		}
 		return objs;
@@ -111,11 +111,27 @@ public class HibernateDaoImpl implements HibernateDao {
 			Session session = this.getSession();
 			objs = session.createCriteria(clazz).list();
 		} catch (HibernateException ex) {
-			log.error("Fail to find all  objects", ex);
+			logger.error("Fail to find all  objects", ex);
 			throw new DaoException("Fail to find all  objects", ex);
 		}
 		return objs;
 	}
+	
+	/*
+	 * 根据实体类加载所有数据，返回持久化实例
+	 */
+	public List findAll(final Class entityClass, final int firstResult, final int maxResult) throws DaoException {
+		Session session = this.getSession();
+		try {
+			Criteria criteria = session.createCriteria(entityClass).setFirstResult(firstResult)
+					.setMaxResults(maxResult);
+			return criteria.list();
+		} catch (HibernateException ex) {
+			logger.error("Fail to load all ", ex);
+			throw new DaoException("Fail to load all", ex);
+		} 
+	}
+
 
 	/*
 	 * 根据持久类单个条件查找
@@ -127,7 +143,7 @@ public class HibernateDaoImpl implements HibernateDao {
 			Session session = this.getSession();
 			objs = session.createCriteria(clazz).add(restriction).list();
 		} catch (HibernateException ex) {
-			log.error("Fail to find objects by property", ex);
+			logger.error("Fail to find objects by property", ex);
 			throw new DaoException("Fail to find objects by property", ex);
 		}
 		return objs;
@@ -147,7 +163,7 @@ public class HibernateDaoImpl implements HibernateDao {
 				criteria.add((Criterion) it.next());
 			objs = criteria.list();
 		} catch (HibernateException ex) {
-			log.error("Fail to find objects by criterions", ex);
+			logger.error("Fail to find objects by criterions", ex);
 			throw new DaoException("Fail to find objects by criterions", ex);
 		}
 		return objs;
@@ -173,7 +189,7 @@ public class HibernateDaoImpl implements HibernateDao {
 				criteria.add((Criterion) it.next());
 			objs = criteria.list();
 		} catch (HibernateException ex) {
-			log.error("Fail to find objects by criterions", ex);
+			logger.error("Fail to find objects by criterions", ex);
 			throw new DaoException("Fail to find objects by criterions", ex);
 		}
 		return objs;
@@ -188,7 +204,7 @@ public class HibernateDaoImpl implements HibernateDao {
 			Session session = this.getSession();
 			result = session.createSQLQuery(sqlQuery).addEntity(aliasName, clazz).list();
 		} catch (HibernateException ex) {
-			log.error("Fail to execute query", ex);
+			logger.error("Fail to execute query", ex);
 			throw new DaoException("Fail to execute query", ex);
 		}
 		return result;
@@ -203,7 +219,7 @@ public class HibernateDaoImpl implements HibernateDao {
 			Session session = this.getSession();
 			result = session.createQuery(hqlQuery).list();
 		} catch (HibernateException ex) {
-			log.error("Fail to execute query", ex);
+			logger.error("Fail to execute query", ex);
 			throw new DaoException("Fail to execute query", ex);
 		}
 		return result;
@@ -246,7 +262,7 @@ public class HibernateDaoImpl implements HibernateDao {
 
 			return queryObject.list();
 		} catch (HibernateException ex) {
-			log.error("Fail to find", ex);
+			logger.error("Fail to find", ex);
 			throw new DaoException("Fail to find", ex);
 		}
 	}
@@ -272,7 +288,7 @@ public class HibernateDaoImpl implements HibernateDao {
 			}
 			return queryObject.list();
 		} catch (HibernateException ex) {
-			log.error("Fail to find by named param");
+			logger.error("Fail to find by named param");
 			throw new DaoException("Fail to find by named param", ex);
 		}
 	}
@@ -288,7 +304,7 @@ public class HibernateDaoImpl implements HibernateDao {
 			queryObject.setProperties(valueBean);
 			return queryObject.list();
 		} catch (HibernateException ex) {
-			log.error("Fail to find by valueBean", ex);
+			logger.error("Fail to find by valueBean", ex);
 			throw new DaoException("Fail to find by valueBeam", ex);
 		}
 	}
@@ -322,7 +338,7 @@ public class HibernateDaoImpl implements HibernateDao {
 			}
 			return queryObject.list();
 		} catch (HibernateException ex) {
-			log.error("Fail to find by Named query", ex);
+			logger.error("Fail to find by Named query", ex);
 			throw new DaoException("Fail to find by Named query", ex);
 		}
 	}
@@ -353,7 +369,7 @@ public class HibernateDaoImpl implements HibernateDao {
 			}
 			return queryObject.list();
 		} catch (HibernateException ex) {
-			log.error("Fail to find by Named query and Named Param", ex);
+			logger.error("Fail to find by Named query and Named Param", ex);
 			throw new DaoException("Fail to find by Named query and Named Param", ex);
 		}
 	}
@@ -369,7 +385,7 @@ public class HibernateDaoImpl implements HibernateDao {
 			queryObject.setProperties(valueBean);
 			return queryObject.list();
 		} catch (HibernateException ex) {
-			log.error("Fail to find by Named query and value bean", ex);
+			logger.error("Fail to find by Named query and value bean", ex);
 			throw new DaoException("Fail to find by Named query and value bean", ex);
 		}
 	}
@@ -414,7 +430,7 @@ public class HibernateDaoImpl implements HibernateDao {
 			Serializable id = session.save(persistentObject);
 			return id;
 		} catch (HibernateException ex) {
-			log.error("Fail to save persistentObject", ex);
+			logger.error("Fail to save persistentObject", ex);
 			throw new DaoException("Fail to save persistentObject", ex);
 		}
 	}
@@ -427,7 +443,7 @@ public class HibernateDaoImpl implements HibernateDao {
 			Session session = this.getSession();
 			session.saveOrUpdate(persistentObject);
 		} catch (HibernateException ex) {
-			log.error("Fail to save or update persistentObject", ex);
+			logger.error("Fail to save or update persistentObject", ex);
 			throw new DaoException("Fail to save or update persistentObject", ex);
 		}
 	}
@@ -468,7 +484,7 @@ public class HibernateDaoImpl implements HibernateDao {
 			}
 			return queryObject.list();
 		} catch (HibernateException ex) {
-			log.error("Fail to find by query string", ex);
+			logger.error("Fail to find by query string", ex);
 			throw new DaoException("Fail to find by query string", ex);
 		}
 	}
@@ -489,40 +505,12 @@ public class HibernateDaoImpl implements HibernateDao {
 			}
 			return queryObject.list();
 		} catch (HibernateException ex) {
-			log.error("Fail to find by query string", ex);
+			logger.error("Fail to find by query string", ex);
 			throw new DaoException("Fail to find by query string", ex);
 		} 
 	}
 
-	/*
-	 * 根据实体类查询所有数据，返回持久化实例。指定从第几条数据开始返回和返回数据的条数，第一条设置firstResult=0
-	 */
-	public List loadAll(final Class entityClass) throws DaoException {
-		Session session = this.getSession();
-		try {
-			Criteria criteria = session.createCriteria(entityClass);
-			return criteria.list();
-		} catch (HibernateException ex) {
-			log.error("Fail to load all ", ex);
-			throw new DaoException("Fail to load all", ex);
-		}
-	}
-
-	/*
-	 * 根据实体类加载所有数据，返回持久化实例
-	 */
-	public List loadAll(final Class entityClass, final int firstResult, final int maxResult) throws DaoException {
-		Session session = this.getSession();
-		try {
-			Criteria criteria = session.createCriteria(entityClass).setFirstResult(firstResult)
-					.setMaxResults(maxResult);
-			return criteria.list();
-		} catch (HibernateException ex) {
-			log.error("Fail to load all ", ex);
-			throw new DaoException("Fail to load all", ex);
-		} 
-	}
-
+	
 	public String getQueryCacheRegion() {
 		return queryCacheRegion;
 	}
