@@ -8,14 +8,6 @@ import org.hibernate.Query;
 //hibernate查询条件类
 import org.hibernate.criterion.Criterion;
 
-/**
- * 
- * @param <T>
- * @param <ID>
- *            File Name : GenericDAO.java
- * @Description : 基类 DAO 接口
- * @author qhp
- */
 public interface GenericDao<T, PK extends Serializable> {
 
 	/**

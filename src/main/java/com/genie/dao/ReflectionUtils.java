@@ -19,14 +19,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
-/**
- * 
- * 反射的Util函数集合
- * 
- * File Name    : ReflectionUtils.java
- * @Description 	: 提供访问私有变量,获取泛型类型Class,提取集合中元素的属性,转换字符串到对象等Util函数
- * @author 903819
- */
 public class ReflectionUtils {
 	
 	private static Logger logger = LoggerFactory.getLogger(ReflectionUtils.class);

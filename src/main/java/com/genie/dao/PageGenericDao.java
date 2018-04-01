@@ -6,11 +6,6 @@ import java.util.Map;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 
-/**
- * 
- * @Description : 分页查询DAO接口类
- * @author cc
- */
 public interface PageGenericDao<T, PK extends Serializable> extends GenericDao<T, PK> {
 
 	/**

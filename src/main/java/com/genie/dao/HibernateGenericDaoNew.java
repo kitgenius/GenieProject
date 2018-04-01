@@ -17,11 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
-/**
- * 
- * @Description : Hibernate基础查询DAO接口类
- * @author cc
- */
+
 public class HibernateGenericDaoNew<T, PK extends Serializable> implements GenericDaoOld<T, PK> {
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
