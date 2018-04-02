@@ -36,7 +36,7 @@ public interface GenericDao<T, PK extends Serializable> {
 	 * @return
 	 *
 	 */
-	public T findAll();
+	public List<T> findAll();
 
 	/**
 	 * 

@@ -17,6 +17,7 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
 
 import com.genie.dao.DaoException;
 import com.genie.dao.Page;
@@ -31,8 +32,6 @@ public class PageHibernateGenericDaoImpl<T, PK extends Serializable> extends Hib
 	
 	// 实体类对象
 	protected Class<T> entityClass;
-		
-	
 	
 	public PageHibernateGenericDaoImpl() {
 		Type genType = getClass().getGenericSuperclass();
@@ -64,23 +63,27 @@ public class PageHibernateGenericDaoImpl<T, PK extends Serializable> extends Hib
 	public List<T> findAll() {
 		return super.findAll(entityClass.getClass());
 	}
+	
+	/**
+	 * 
+	 * Description : 获取实体对象
+	 * 
+	 * @param id
+	 *            实体主键
+	 * @return entity 实体对象
+	 *
+	 */
+	public T findById(Serializable id) {
+		logger.info("根据ID" + id + "获取实体对象");
+		Assert.notNull(id, "id不能为空");
+		logger.info("get entity: {}", id);
+		return (T) getSession().get(entityClass, id);
+	}
 
 	@Override
 	public void deleteById(Serializable id) {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	@Override
-	public T findById(Serializable id){
-		Restrictions.eq("id", "id");
-		return null;
-	}
-
-	@Override
-	public T findUniqueByProperty(String pName, Object pValue) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
