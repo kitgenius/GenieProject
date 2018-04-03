@@ -82,14 +82,20 @@ public class PageHibernateGenericDaoImpl<T, PK extends Serializable> extends Hib
 
 	@Override
 	public void deleteById(Serializable id) {
-		// TODO Auto-generated method stub
+		delete(findById(id));
 		
 	}
 
 	@Override
-	public T findUniqueByNProperty(Object... strs) {
-		// TODO Auto-generated method stub
-		return null;
+	public T findUniqueByProperty(String pName, Object pValue) {
+		List<T> resultList = findByProperty(pName, pValue);
+		return resultList.get(0);
+	}
+	
+	@Override
+	public T findUniqueByNProperty(String[] pNames, Object[] pValues) {
+		List<T> result = findByNProperty(pNames,pValues);
+		return result.get(0);
 	}
 
 	@Override
@@ -112,33 +118,25 @@ public class PageHibernateGenericDaoImpl<T, PK extends Serializable> extends Hib
 
 	@Override
 	public List<T> findByProperty(String pName, Object pValue) {
-		// TODO Auto-generated method stub
-		return null;
+		Criterion restriction = Restrictions.eq(pName, pValue);
+		List<T> resultList = findByProperty(entityClass.getClass(), restriction);
+		return resultList;
 	}
 
 	@Override
-	public List<T> findByProperty(String pName, Object pValue, String condition) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<T> findByNProperty(String[] pNames,Object[] pValues) {
+		if (pNames.length != pValues.length) {
+			throw new IllegalArgumentException("Length of paramNames array must match length of values array");
+		}
+		List<Criterion> restrictionsList = new ArrayList();
+		for(int i =0 ; i < pValues.length ; i++){
+			restrictionsList.add(Restrictions.eqOrIsNull(pNames[i], pValues[i]));
+		}
+		
+		List<T> resultList = findByCriterions(entityClass.getClass(), restrictionsList);
+		return resultList;
 	}
 
-	@Override
-	public List<T> findByNProperty(Object... strs) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<T> findByHql(String hql, Object... values) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<T> findBySql(String sql, Object... values) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void initEntity(T entity) {
@@ -182,17 +180,6 @@ public class PageHibernateGenericDaoImpl<T, PK extends Serializable> extends Hib
 		return null;
 	}
 
-	@Override
-	public Query createQuery(String queryString, Object... values) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Query createQuery(String queryString, Map<String, Object> values) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public int executeUpdate(String queryString, Object... values) {
@@ -216,12 +203,6 @@ public class PageHibernateGenericDaoImpl<T, PK extends Serializable> extends Hib
 	public int countByHql(String hql, Object... values) {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-
-	@Override
-	public List<Map<String, Object>> findBysql(String queryString, Object... values) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -259,6 +240,8 @@ public class PageHibernateGenericDaoImpl<T, PK extends Serializable> extends Hib
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 
 	
 }

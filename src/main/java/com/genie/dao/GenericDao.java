@@ -81,7 +81,7 @@ public interface GenericDao<T, PK extends Serializable> {
 	 * @param strs
 	 * @return
 	 */
-	public T findUniqueByNProperty(Object... strs);
+	public T findUniqueByNProperty(String[] pName, Object[] pValue);
 
 	/**
 	 * 根据HQL查询，取结果集合中的第0个结果
@@ -116,15 +116,6 @@ public interface GenericDao<T, PK extends Serializable> {
 	 */
 	public List<T> findByProperty(String pName, Object pValue);
 
-	/**
-	 * 根据属性和条件查询 全部
-	 * 
-	 * @param pName
-	 * @param pValue
-	 * @param condition
-	 * @return
-	 */
-	public List<T> findByProperty(String pName, Object pValue, String condition);
 
 	/**
 	 * 根据多个属性模糊查询
@@ -132,33 +123,14 @@ public interface GenericDao<T, PK extends Serializable> {
 	 * @param strs
 	 * @return
 	 */
-	public List<T> findByNProperty(Object... strs);
+	public List<T> findByNProperty(String[] pNames,Object[] pValues);
 
-	/**
-	 * 根据HQL查询 全部
-	 * 
-	 * @param hql
-	 * @return
-	 */
-	public List<T> findByHql(String hql, Object... values);
-
-	/**
-	 * 根据SQL查询全部
-	 * 
-	 * @param sql
-	 * @param clazz
-	 * @return
-	 */
-	public List<T> findBySql(String sql, Object... values);
 
 	/**
 	 * 
 	 * Description : 初始化对象. 使用load()方法得到的仅是对象Proxy, 在传到View层前需要进行初始化.
 	 * 只初始化entity的直接属性,但不会初始化延迟加载的关联集合和属性. 如需初始化关联属性,可实现新的函数,执行:
-	 * Hibernate.initialize(user.getRoles())，初始化User的直接属性和关联集合.
-	 * Hibernate.initialize(user.getDescription())，初始化User的直接属性和延迟加载的Description属性.
-	 *
-	 *
+	 * 
 	 * @param entity
 	 *
 	 */
@@ -233,27 +205,6 @@ public interface GenericDao<T, PK extends Serializable> {
 	 */
 	public T findUnique(final Criterion... criterions);
 
-	/**
-	 * 
-	 * Description : 根据查询HQL与参数列表创建Query对象
-	 *
-	 * @param queryString
-	 * @param values
-	 * @return
-	 *
-	 */
-	public Query createQuery(final String queryString, final Object... values);
-
-	/**
-	 * 
-	 * Description : 根据查询HQL与参数列表创建Query对象
-	 *
-	 * @param queryString
-	 * @param values
-	 * @return
-	 *
-	 */
-	public Query createQuery(final String queryString, final Map<String, Object> values);
 
 	/**
 	 * 
@@ -299,14 +250,8 @@ public interface GenericDao<T, PK extends Serializable> {
 	 */
 	public int countByHql(String hql, Object... values);
 
-	/**
-	 * 
-	 * Description : 根据查询SQL与参数列表查询返回List<Map<String,Object>>对象
-	 *
-	 * @param queryString
-	 * @param values
-	 * @return
-	 *
-	 */
-	public List<Map<String, Object>> findBysql(String queryString, Object... values);
+	public List findByCriterions(Class clazz, List restrictions) throws DaoException;
+	   
+	public List findByCriterions(Class clazz, List restrictions , int firstResult, int maxResult) throws DaoException;
+
 }
