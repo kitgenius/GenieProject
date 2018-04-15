@@ -57,6 +57,89 @@ public class PageHibernateGenericDaoImpl<T, PK extends Serializable> extends Hib
 		this.entityClass = entityClass;
 	}
 	
+<<<<<<< HEAD
+=======
+	@Override
+	public List<T> findAll() {
+		return super.findAll(entityClass.getClass());
+	}
+	
+	/**
+	 * 
+	 * Description : 获取实体对象
+	 * 
+	 * @param id
+	 *            实体主键
+	 * @return entity 实体对象
+	 *
+	 */
+	public T findById(Serializable id) {
+		logger.info("根据ID" + id + "获取实体对象");
+		Assert.notNull(id, "id不能为空");
+		logger.info("get entity: {}", id);
+		return (T) getSession().get(entityClass, id);
+	}
+
+	@Override
+	public void deleteById(Serializable id) {
+		delete(findById(id));
+		
+	}
+
+	@Override
+	public T findUniqueByProperty(String pName, Object pValue) {
+		List<T> resultList = findByProperty(pName, pValue);
+		return resultList.get(0);
+	}
+	
+	@Override
+	public T findUniqueByNProperty(String[] pNames, Object[] pValues) {
+		List<T> result = findByNProperty(pNames,pValues);
+		return result.get(0);
+	}
+
+	@Override
+	public T findUniqueByHql(String hql, Object... values) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public T findUniqueBySql(String sql, Object... values) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<T> findByExample(T entity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<T> findByProperty(String pName, Object pValue) {
+		Criterion restriction = Restrictions.eq(pName, pValue);
+		List<T> resultList = findByProperty(entityClass.getClass(), restriction);
+		return resultList;
+	}
+
+	@Override
+	public List<T> findByNProperty(String[] pNames,Object[] pValues) {
+		if (pNames.length != pValues.length) {
+			throw new IllegalArgumentException("Length of paramNames array must match length of values array");
+		}
+		List<Criterion> restrictionsList = new ArrayList();
+		for(int i =0 ; i < pValues.length ; i++){
+			restrictionsList.add(Restrictions.eqOrIsNull(pNames[i], pValues[i]));
+		}
+		
+		List<T> resultList = findByCriterions(entityClass.getClass(), restrictionsList);
+		return resultList;
+	}
+
+
+	@Override
+>>>>>>> branch 'test2.1' of https://github.com/kitgenius/GenieProject.git
 	public void initEntity(T entity) {
 		// TODO Auto-generated method stub
 		
@@ -99,6 +182,51 @@ public class PageHibernateGenericDaoImpl<T, PK extends Serializable> extends Hib
 		logger.info("delete entity: {}", id);
 	}
 
+<<<<<<< HEAD
+=======
+	@Override
+	public <X> X findUnique(String hql, Object... values) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <X> X findUnique(String hql, Map<String, Object> values) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public T findUnique(Criterion... criterions) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public int executeUpdate(String queryString, Object... values) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int executeUpdate(String queryString, Map<String, Object> values) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int countBySql(String sql, Object... values) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int countByHql(String hql, Object... values) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+>>>>>>> branch 'test2.1' of https://github.com/kitgenius/GenieProject.git
 
 	@Override
 	public Page<T> queryPage(Page<T> page, String hql, Object... values) {
@@ -133,6 +261,7 @@ public class PageHibernateGenericDaoImpl<T, PK extends Serializable> extends Hib
 	public List findByCriterions(List restrictions) {
 		return findByCriterions(entityClass,restrictions);
 	}
+<<<<<<< HEAD
 	
 	/**
 	 * 根据多个条件查询，多个条件and。指定从第几条数据开始返回和返回数据的条数，第一条设置firstResult=0
@@ -144,5 +273,10 @@ public class PageHibernateGenericDaoImpl<T, PK extends Serializable> extends Hib
 	public List findByCriterions(List restrictions, int firstResult, int maxResult){
 		return findByCriterions(entityClass, restrictions,firstResult, maxResult);
 	}
+=======
+
+
+
+>>>>>>> branch 'test2.1' of https://github.com/kitgenius/GenieProject.git
 	
 }
