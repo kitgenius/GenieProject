@@ -13,9 +13,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
@@ -24,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.Assert;
 
 import com.genie.dao.DaoException;
 import com.genie.dao.HibernateDao;
@@ -510,6 +515,69 @@ public class HibernateDaoImpl implements HibernateDao {
 		} 
 	}
 
+	public Query createQuery(String queryString, Object... values) {
+		Assert.hasText(queryString, "queryString不能为空");
+		Query query = getSession().createQuery(queryString);
+		query.setCacheable(true);
+
+		if (values != null) {
+			for (int i = 0; i < values.length; i++) {
+				if (values[i] != null && StringUtils.isNotEmpty(values[i].toString()))
+					query.setParameter(i, values[i]);
+			}
+		}
+
+		return query;
+	}
+
+	public Query createQuery(String queryString, Map<String, Object> values) {
+		Assert.hasText(queryString, "queryString不能为空");
+		Query query = getSession().createQuery(queryString);
+		query.setCacheable(true);
+
+		if (values != null) {
+			query.setProperties(values);
+		}
+
+		return query;
+	}
+	
+	public SQLQuery createSQLQuery(String queryString, Object... values) {
+		Assert.hasText(queryString, "queryString不能为空");
+		SQLQuery query = getSession().createSQLQuery(queryString);
+		query.setCacheable(true);
+		if (values != null) {
+			for (int i = 0; i < values.length; i++) {
+				if (values[i] != null && StringUtils.isNotEmpty(values[i].toString()))
+					query.setParameter(i, values[i]);
+			}
+		}
+
+		return query;
+	}
+	
+	public int countBySql(String sql, Object... values) {
+		logger.info("countBySql", sql);
+		Query query = createSQLQuery(sql, values);
+		return Integer.valueOf(query.uniqueResult().toString());
+	}
+
+	
+	public int countByHql(String hql, Object... values) {
+		Query query = createQuery(hql, values);
+		return Integer.valueOf(query.uniqueResult().toString());
+	}
+	
+	public int executeUpdate(String hql, Object... values) {
+		return createQuery(hql, values).executeUpdate();
+	}
+
+	
+	public int executeUpdate(String hql, Map<String, Object> values) {
+		return createQuery(hql, values).executeUpdate();
+	}
+	
+	
 	
 	public String getQueryCacheRegion() {
 		return queryCacheRegion;

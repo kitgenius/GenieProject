@@ -12,13 +12,45 @@ public interface GenericDao<T, PK extends Serializable> {
 
 	/**
 	 * 
-	 * Description : 保存 实体对象
+	 * Description : 获取 实体对象
 	 *
-	 * @param entity
+	 * @param id
+	 * @return
 	 *
 	 */
-	public Serializable save(final T entity);
+	public List<T> findAll();
+	
+	/**
+	 * 根据主键查找
+	 * @param id
+	 * @return
+	 */
+	public T findById(Serializable id);
 
+	/**
+	 * 根据对象查询 全部
+	 * @param entity
+	 * @return
+	 */
+	List<T> findByExample(T entity);
+
+	/**
+	 * 
+	 * Description : 按Criteria查询唯一对象
+	 *
+	 * @param criterions
+	 * @return
+	 *
+	 */
+	public T findUnique(List restrictions);
+	
+	/**
+	 * 根据主键删除
+	 * 
+	 * @param id
+	 */
+	public void deleteById(Serializable id);
+	
 	/**
 	 * 
 	 * Description : 删除 实体对象
@@ -27,16 +59,15 @@ public interface GenericDao<T, PK extends Serializable> {
 	 *
 	 */
 	public void delete(final T entity);
-
+	
 	/**
 	 * 
-	 * Description : 获取 实体对象
+	 * Description : 保存 实体对象
 	 *
-	 * @param id
-	 * @return
+	 * @param entity
 	 *
 	 */
-	public List<T> findAll();
+	public Serializable save(final T entity);
 
 	/**
 	 * 
@@ -55,258 +86,5 @@ public interface GenericDao<T, PK extends Serializable> {
 	 *
 	 */
 	public void saveOrUpdate(final T entity);
-
-	/**
-	 * 根据主键删除
-	 * 
-	 * @param id
-	 */
-	public void deleteById(Serializable id);
 	
-	public T findById(Serializable id);
-
-	/**
-	 * 根据属性查询，取结果集合中的第0个结果
-	 * 
-	 * @param pName
-	 * @param pValue
-	 * @return
-	 */
-	public T findUniqueByProperty(String pName, Object pValue);
-
-	/**
-	 * 根据多个属性查询，取结果集合中的第0个结果
-	 * 
-	 * @param clazz
-	 * @param strs
-	 * @return
-	 */
-	public T findUniqueByNProperty(Object... strs);
-
-	/**
-	 * 根据HQL查询，取结果集合中的第0个结果
-	 * 
-	 * @param hql
-	 * @return
-	 */
-	public T findUniqueByHql(String hql, Object... values);
-
-	/**
-	 * 根据SQL查询，取结果集合中的第0个结果
-	 * 
-	 * @param sql
-	 * @param clazz
-	 * @return
-	 */
-	public T findUniqueBySql(String sql, Object... values);
-
-	/**
-	 * 根据对象查询 全部
-	 * @param entity
-	 * @return
-	 */
-	List<T> findByExample(T entity);
-	
-	/**
-	 * 根据属性查询 全部
-	 * 
-	 * @param pName
-	 * @param pValue
-	 * @return
-	 */
-	public List<T> findByProperty(String pName, Object pValue);
-
-	/**
-	 * 根据属性和条件查询 全部
-	 * 
-	 * @param pName
-	 * @param pValue
-	 * @param condition
-	 * @return
-	 */
-	public List<T> findByProperty(String pName, Object pValue, String condition);
-
-	/**
-	 * 根据多个属性模糊查询
-	 * 
-	 * @param strs
-	 * @return
-	 */
-	public List<T> findByNProperty(Object... strs);
-
-	/**
-	 * 根据HQL查询 全部
-	 * 
-	 * @param hql
-	 * @return
-	 */
-	public List<T> findByHql(String hql, Object... values);
-
-	/**
-	 * 根据SQL查询全部
-	 * 
-	 * @param sql
-	 * @param clazz
-	 * @return
-	 */
-	public List<T> findBySql(String sql, Object... values);
-
-	/**
-	 * 
-	 * Description : 初始化对象. 使用load()方法得到的仅是对象Proxy, 在传到View层前需要进行初始化.
-	 * 只初始化entity的直接属性,但不会初始化延迟加载的关联集合和属性. 如需初始化关联属性,可实现新的函数,执行:
-	 * Hibernate.initialize(user.getRoles())，初始化User的直接属性和关联集合.
-	 * Hibernate.initialize(user.getDescription())，初始化User的直接属性和延迟加载的Description属性.
-	 *
-	 *
-	 * @param entity
-	 *
-	 */
-	public void initEntity(T entity);
-
-	/**
-	 * 
-	 * Description : 初始化对象
-	 *
-	 * @param entityList
-	 *
-	 */
-	public void initEntity(List<T> entityList);
-
-	
-	
-	/**
-	 * 
-	 * Description : 按HQL查询对象列表
-	 *
-	 * @param <X>
-	 * @param hql
-	 * @param values
-	 * @return
-	 *
-	 */
-	public <X> List<X> query(final String hql, final Object... values);
-
-	/**
-	 * 
-	 * Description : 按HQL查询对象列表
-	 *
-	 * @param <X>
-	 * @param hql
-	 * @param values
-	 * @return
-	 *
-	 */
-	public <X> List<X> query(final String hql, final Map<String, Object> values);
-
-	/**
-	 * 
-	 * Description : 按HQL查询唯一对象
-	 *
-	 * @param <X>
-	 * @param hql
-	 * @param values
-	 * @return
-	 *
-	 */
-	public <X> X findUnique(final String hql, final Object... values);
-
-	/**
-	 * 
-	 * Description : 按HQL查询唯一对象
-	 *
-	 * @param <X>
-	 * @param hql
-	 * @param values
-	 * @return
-	 *
-	 */
-	public <X> X findUnique(final String hql, final Map<String, Object> values);
-
-	/**
-	 * 
-	 * Description : 按Criteria查询唯一对象
-	 *
-	 * @param criterions
-	 * @return
-	 *
-	 */
-	public T findUnique(final Criterion... criterions);
-
-	/**
-	 * 
-	 * Description : 根据查询HQL与参数列表创建Query对象
-	 *
-	 * @param queryString
-	 * @param values
-	 * @return
-	 *
-	 */
-	public Query createQuery(final String queryString, final Object... values);
-
-	/**
-	 * 
-	 * Description : 根据查询HQL与参数列表创建Query对象
-	 *
-	 * @param queryString
-	 * @param values
-	 * @return
-	 *
-	 */
-	public Query createQuery(final String queryString, final Map<String, Object> values);
-
-	/**
-	 * 
-	 * Description : 根据查询HQL与参数列表 执行
-	 *
-	 * @param queryString
-	 * @param values
-	 * @return
-	 *
-	 */
-	public int executeUpdate(final String queryString, final Object... values);
-
-	/**
-	 * 
-	 * Description : 根据查询HQL与参数列表 执行
-	 *
-	 * @param queryString
-	 * @param values
-	 * @return
-	 *
-	 */
-	public int executeUpdate(final String queryString, final Map<String, Object> values);
-
-	/**
-	 * 
-	 * Description : 根据查询SQL与参数列表查询返回count（*）数量
-	 *
-	 * @param queryString
-	 * @param values
-	 * @return
-	 *
-	 */
-	public int countBySql(String sql, Object... values);
-
-	/**
-	 * 
-	 * Description : 根据查询HQL与参数列表查询返回count（*）数量
-	 *
-	 * @param queryString
-	 * @param values
-	 * @return
-	 *
-	 */
-	public int countByHql(String hql, Object... values);
-
-	/**
-	 * 
-	 * Description : 根据查询SQL与参数列表查询返回List<Map<String,Object>>对象
-	 *
-	 * @param queryString
-	 * @param values
-	 * @return
-	 *
-	 */
-	public List<Map<String, Object>> findBysql(String queryString, Object... values);
 }

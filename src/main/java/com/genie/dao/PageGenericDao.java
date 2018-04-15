@@ -58,10 +58,10 @@ public interface PageGenericDao<T, PK extends Serializable> extends GenericDao<T
 	 *            查询值
 	 * @return
 	 *
-	 */
+	 *//*
 	public int countHqlResult(final String hql, final Object... values);
 
-	/**
+	*//**
 	 * 
 	 * Description : 执行count查询获得本次Hql查询所能获得的对象总数
 	 *
@@ -71,8 +71,8 @@ public interface PageGenericDao<T, PK extends Serializable> extends GenericDao<T
 	 *            map对象查询值
 	 * @return
 	 *
-	 */
-	public int countHqlResult(final String hql, final Map<String, Object> values);
+	 *//*
+	public int countHqlResult(final String hql, final Map<String, Object> values);*/
 
 	/**
 	 * 
@@ -82,6 +82,6 @@ public interface PageGenericDao<T, PK extends Serializable> extends GenericDao<T
 	 *            Criteria对象
 	 * @return
 	 *
-	 */
-	public int countCriteriaResult(final Criteria c);
+	 *//*
+	public int countCriteriaResult(final Criteria c);*/
 }
