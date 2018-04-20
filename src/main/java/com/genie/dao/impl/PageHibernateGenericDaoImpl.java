@@ -4,10 +4,11 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -151,18 +152,6 @@ public class PageHibernateGenericDaoImpl<T, PK extends Serializable> extends Hib
 	}
 
 	@Override
-	public <X> List<X> query(String hql, Object... values) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <X> List<X> query(String hql, Map<String, Object> values) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public <X> X findUnique(String hql, Object... values) {
 		// TODO Auto-generated method stub
 		return null;
@@ -175,9 +164,9 @@ public class PageHibernateGenericDaoImpl<T, PK extends Serializable> extends Hib
 	}
 
 	@Override
-	public T findUnique(Criterion... criterions) {
-		// TODO Auto-generated method stub
-		return null;
+	public T findUniqueByCriterions(Criterion... criterions) {
+		List<T> resultList = findByCriterions(entityClass.getClass(), Arrays.asList(criterions) );
+		return resultList.get(0);
 	}
 
 

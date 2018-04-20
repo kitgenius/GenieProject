@@ -176,22 +176,6 @@ public class Page<T> {
 		this.resultList = resultList;
 	}
 
-	public String resolveUrl(String url, String queryString, Integer pageNo, Integer pageSize) {
-		if (queryString == null)
-			queryString = new String();
-		else
-			queryString = queryString.replaceAll("&pageNo=\\d*", "").replaceAll("pageNo=\\d*", "")
-					.replaceAll("&pageSize=\\d*", "").replaceAll("pageSize=\\d*", "");
-
-		if (pageNo != null)
-			queryString = queryString.isEmpty() ? "pageNo=" + pageNo.toString()
-					: queryString + "&pageNo=" + pageNo.toString();
-		if (pageSize != null)
-			queryString = queryString.isEmpty() ? "pageSize=" + pageSize.toString()
-					: queryString + "&pageSize=" + pageSize.toString();
-
-		return queryString.isEmpty() ? url : url + "?" + queryString;
-	}
 
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;

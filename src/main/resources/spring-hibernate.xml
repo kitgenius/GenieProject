@@ -30,15 +30,15 @@
 				<!-- <prop key="hibernate.c3p0.max_statements">0</prop> -->
 			</props>
 		</property>
-		<property name="mappingResources">
+		<!-- <property name="mappingResources">
 			<list>
 				<value>./hbm/Login.hbm.xml</value>
 				<value>./hbm/Auth.hbm.xml</value>
 				<value>./hbm/Role.hbm.xml</value>
 			</list>
-		</property>
+		</property> -->
 		<!-- 扫描hibernate注解配置的entity -->
-		<!-- <property name="packagesToScan" value="model"></property> -->
+		<property name="packagesToScan" value="entity"></property>
 	</bean>
 
 	<!-- 事务管理器 -->
