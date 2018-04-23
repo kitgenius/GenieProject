@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class Page<T> {
+public class Row<T> {
 	/**
 	 * 查询所有记录标示
 	 */
@@ -62,24 +62,24 @@ public class Page<T> {
 	 * @return
 	 * 
 	 */
-	public static Page<String> getBlankPage(int pageSize) {
-		Page<String> page = new Page<String>(0, pageSize);
+	public static Row<String> getBlankPage(int pageSize) {
+		Row<String> page = new Row<String>(0, pageSize);
 		return page;
 	}
 
-	public Page() {
+	public Row() {
 
 	}
 
-	public Page(List<T> resultList) {
+	public Row(List<T> resultList) {
 		this.resultList = resultList;
 	}
 
-	public Page(int totalCount, int pageSize) {
+	public Row(int totalCount, int pageSize) {
 		this(totalCount, pageSize, 1);
 	}
 
-	public Page(int totalCount, int pageSize, int currentPage) {
+	public Row(int totalCount, int pageSize, int currentPage) {
 		if (pageSize > 0) {
 			this.pageSize = pageSize;
 		} else {
@@ -97,7 +97,7 @@ public class Page<T> {
 		setCurrentPage(currentPage);
 	}
 
-	public Page(List<T> resultList, int totalCount, int pageSize, int currentPage) {
+	public Row(List<T> resultList, int totalCount, int pageSize, int currentPage) {
 		this(totalCount, pageSize, currentPage);
 		this.resultList = resultList;
 	}

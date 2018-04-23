@@ -515,6 +515,12 @@ public class HibernateDaoImpl implements HibernateDao {
 		} 
 	}
 
+	/**
+	 * 创建hql query
+	 * @param queryString
+	 * @param values
+	 * @return
+	 */
 	public Query createQuery(String queryString, Object... values) {
 		Assert.hasText(queryString, "queryString不能为空");
 		Query query = getSession().createQuery(queryString);
@@ -530,6 +536,12 @@ public class HibernateDaoImpl implements HibernateDao {
 		return query;
 	}
 
+	/**
+	 * 创建hql query
+	 * @param queryString
+	 * @param values
+	 * @return
+	 */
 	public Query createQuery(String queryString, Map<String, Object> values) {
 		Assert.hasText(queryString, "queryString不能为空");
 		Query query = getSession().createQuery(queryString);
@@ -542,6 +554,12 @@ public class HibernateDaoImpl implements HibernateDao {
 		return query;
 	}
 	
+	/**
+	 * 创建sql query
+	 * @param queryString
+	 * @param values
+	 * @return
+	 */
 	public SQLQuery createSQLQuery(String queryString, Object... values) {
 		Assert.hasText(queryString, "queryString不能为空");
 		SQLQuery query = getSession().createSQLQuery(queryString);
@@ -556,27 +574,48 @@ public class HibernateDaoImpl implements HibernateDao {
 		return query;
 	}
 	
-	public int countBySql(String sql, Object... values) {
-		logger.info("countBySql", sql);
-		Query query = createSQLQuery(sql, values);
+	/**
+	 * 根据sql计算结果数
+	 * @param queryString sql语句
+	 * @param values 多个参数
+	 * @return
+	 */
+	public int countBySql(String queryString, Object... values) {
+		logger.info("countBySql", queryString);
+		Query query = createSQLQuery(queryString, values);
 		return Integer.valueOf(query.uniqueResult().toString());
 	}
 
-	
-	public int countByHql(String hql, Object... values) {
-		Query query = createQuery(hql, values);
+	/**
+	 * 根据hql计算结果数
+	 * @param queryString hql语句
+	 * @param values 多个参数
+	 * @return
+	 */
+	public int countByHql(String queryString, Object... values) {
+		Query query = createQuery(queryString, values);
 		return Integer.valueOf(query.uniqueResult().toString());
 	}
 	
-	public int executeUpdate(String hql, Object... values) {
-		return createQuery(hql, values).executeUpdate();
+	/**
+	 * 执行hql更新
+	 * @param queryString hql语句
+	 * @param values 多个参数
+	 * @return
+	 */
+	public int executeUpdate(String queryString, Object... values) {
+		return createQuery(queryString, values).executeUpdate();
 	}
 
-	
-	public int executeUpdate(String hql, Map<String, Object> values) {
-		return createQuery(hql, values).executeUpdate();
+	/**
+	 * 执行hql更新
+	 * @param queryString hql语句
+	 * @param values 参数map
+	 * @return
+	 */
+	public int executeUpdate(String queryString, Map<String, Object> values) {
+		return createQuery(queryString, values).executeUpdate();
 	}
-	
 	
 	
 	public String getQueryCacheRegion() {

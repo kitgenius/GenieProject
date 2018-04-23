@@ -13,27 +13,33 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.internal.CriteriaImpl;
+import org.hibernate.transform.ResultTransformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
 import com.genie.dao.DaoException;
-import com.genie.dao.Page;
-import com.genie.dao.PageGenericDao;
+import com.genie.dao.Row;
+import com.genie.dao.RowGenericDao;
+import com.genie.dao.ReflectionUtils;
 
 /*author:Genie
  *date:2018年4月1日
 **/
-public class PageHibernateGenericDaoImpl<T, PK extends Serializable> extends HibernateDaoImpl implements PageGenericDao<T, PK> {
+public class RowHibernateGenericDaoImpl<T, PK extends Serializable> extends HibernateDaoImpl implements RowGenericDao<T, PK> {
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 	
 	// 实体类对象
 	protected Class<T> entityClass;
 	
-	public PageHibernateGenericDaoImpl() {
+	public RowHibernateGenericDaoImpl() {
 		Type genType = getClass().getGenericSuperclass();
 
 		if (!(genType instanceof ParameterizedType)) {
@@ -52,7 +58,7 @@ public class PageHibernateGenericDaoImpl<T, PK extends Serializable> extends Hib
 		}
 	}
 
-	public PageHibernateGenericDaoImpl(final SessionFactory sessionFactory, final Class<T> entityClass) {
+	public RowHibernateGenericDaoImpl(final SessionFactory sessionFactory, final Class<T> entityClass) {
 		logger.debug("初始化sessionFactory");
 		this.entityClass = entityClass;
 	}
@@ -101,18 +107,33 @@ public class PageHibernateGenericDaoImpl<T, PK extends Serializable> extends Hib
 
 
 	@Override
-	public Page<T> queryPage(Page<T> page, String hql, Object... values) {
-		
+	public Row<T> queryPage(Row<T> row, String hql, Object... values) {
+		Assert.notNull(row, "row不能为空");
+		Query q = createQuery(hql, values);
+		int totalCount = countByHql(hql, values);
+		row.setTotalCount(totalCount);
+		q.setFirstResult(row.getCurrentPage());
+		q.setMaxResults(row.getPageSize());
+		List<T> result = q.list();
+		row.setResultList(result);
+		return row;
 	}
 
 	@Override
-	public Page<T> queryPage(Page<T> page, String hql, Map<String, Object> values) {
+	public Row<T> queryPage(Row<T> row, Criterion... criterions) {
+		Assert.notNull(row, "row不能为空");
 		
-	}
-
-	@Override
-	public Page<T> queryPage(Page<T> page, Criterion... criterions) {
-		
+		Criteria criteria = getSession().createCriteria(entityClass);
+		for (Criterion c : criterions) {
+			criteria.add(c);
+		}
+		int totalCount = countCriteriaResult(criteria);
+		row.setTotalCount(totalCount);
+		criteria.setFirstResult(row.getCurrentPage()-1);
+		criteria.setMaxResults(row.getPageSize());
+		List<T> result = criteria.list();
+		row.setResultList(result);
+		return row;
 	}
 
 
@@ -134,5 +155,36 @@ public class PageHibernateGenericDaoImpl<T, PK extends Serializable> extends Hib
 		return findByCriterions(entityClass,restrictions);
 	}
 
+	public int countCriteriaResult(Criteria c) {
+		// TODO Auto-generated method stub
+		CriteriaImpl impl = (CriteriaImpl) c;
+		// 先把Projection、ResultTransformer、OrderBy取出来,清空三者后再执行Count操作
+		Projection projection = impl.getProjection();
+		ResultTransformer transformer = impl.getResultTransformer();
+		List<CriteriaImpl.OrderEntry> orderEntries = null;
+		try {
+			orderEntries = (List<CriteriaImpl.OrderEntry>) ReflectionUtils.getFieldValue(impl, "orderEntries");
+			ReflectionUtils.setFieldValue(impl, "orderEntries", new ArrayList());
+		} catch (Exception e) {
+			logger.error("不可能抛出的异常:{}", e.getMessage());
+		}
+		// 执行Count查询
+		int totalCount = (Integer) c.setProjection(Projections.rowCount()).uniqueResult();
+		// 将之前的Projection,ResultTransformer和OrderBy条件重新设回去
+		c.setProjection(projection);
+		if (projection == null) {
+			c.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
+		}
+		if (transformer != null) {
+			c.setResultTransformer(transformer);
+		}
+		try {
+			ReflectionUtils.setFieldValue(impl, "orderEntries", orderEntries);
+		} catch (Exception e) {
+			logger.error("不可能抛出的异常:{}", e.getMessage());
+		}
+		return totalCount;
+	}
+	
 	
 }
