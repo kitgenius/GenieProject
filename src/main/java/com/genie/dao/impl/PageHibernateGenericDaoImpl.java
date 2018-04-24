@@ -106,6 +106,11 @@ public class PageHibernateGenericDaoImpl<T, PK extends Serializable> extends Hib
 	}
 
 	@Override
+	public Page<T> queryPage(Page<T> page, String hql, Map<String, Object> values) {
+		
+	}
+
+	@Override
 	public Page<T> queryPage(Page<T> page, Criterion... criterions) {
 		
 	}
