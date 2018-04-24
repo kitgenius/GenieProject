@@ -13,13 +13,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Projection;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.internal.CriteriaImpl;
-import org.hibernate.transform.ResultTransformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
@@ -27,7 +22,6 @@ import org.springframework.util.Assert;
 import com.genie.dao.DaoException;
 import com.genie.dao.Page;
 import com.genie.dao.PageGenericDao;
-import com.genie.dao.ReflectionUtils;
 
 /*author:Genie
  *date:2018年4月1日
@@ -108,32 +102,17 @@ public class PageHibernateGenericDaoImpl<T, PK extends Serializable> extends Hib
 
 	@Override
 	public Page<T> queryPage(Page<T> page, String hql, Object... values) {
-		Assert.notNull(page, "row不能为空");
-		Query q = createQuery(hql, values);
-		int totalCount = countByHql(hql, values);
-		page.setTotalCount(totalCount);
-		q.setFirstResult(page.getCurrentPage());
-		q.setMaxResults(page.getPageSize());
-		List<T> result = q.list();
-		page.setResultList(result);
-		return page;
+		
+	}
+
+	@Override
+	public Page<T> queryPage(Page<T> page, String hql, Map<String, Object> values) {
+		
 	}
 
 	@Override
 	public Page<T> queryPage(Page<T> page, Criterion... criterions) {
-		Assert.notNull(page, "row不能为空");
 		
-		Criteria criteria = getSession().createCriteria(entityClass);
-		for (Criterion c : criterions) {
-			criteria.add(c);
-		}
-		int totalCount = countCriteriaResult(criteria);
-		page.setTotalCount(totalCount);
-		criteria.setFirstResult(page.getCurrentPage()-1);
-		criteria.setMaxResults(page.getPageSize());
-		List<T> result = criteria.list();
-		page.setResultList(result);
-		return page;
 	}
 
 
@@ -155,34 +134,5 @@ public class PageHibernateGenericDaoImpl<T, PK extends Serializable> extends Hib
 		return findByCriterions(entityClass,restrictions);
 	}
 
-	public int countCriteriaResult(Criteria c) {
-		// TODO Auto-generated method stub
-		CriteriaImpl impl = (CriteriaImpl) c;
-		// 先把Projection、ResultTransformer、OrderBy取出来,清空三者后再执行Count操作
-		Projection projection = impl.getProjection();
-		ResultTransformer transformer = impl.getResultTransformer();
-		List<CriteriaImpl.OrderEntry> orderEntries = null;
-		try {
-			orderEntries = (List<CriteriaImpl.OrderEntry>) ReflectionUtils.getFieldValue(impl, "orderEntries");
-			ReflectionUtils.setFieldValue(impl, "orderEntries", new ArrayList());
-		} catch (Exception e) {
-			logger.error("不可能抛出的异常:{}", e.getMessage());
-		}
-		// 执行Count查询
-		int totalCount = (Integer) c.setProjection(Projections.rowCount()).uniqueResult();
-		// 将之前的Projection,ResultTransformer和OrderBy条件重新设回去
-		c.setProjection(projection);
-		if (projection == null) {
-			c.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
-		}
-		if (transformer != null) {
-			c.setResultTransformer(transformer);
-		}
-		try {
-			ReflectionUtils.setFieldValue(impl, "orderEntries", orderEntries);
-		} catch (Exception e) {
-			logger.error("不可能抛出的异常:{}", e.getMessage());
-		}
-		return totalCount;
-	}
+	
 }

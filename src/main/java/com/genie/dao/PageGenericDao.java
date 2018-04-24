@@ -22,6 +22,21 @@ public interface PageGenericDao<T, PK extends Serializable> extends GenericDao<T
 
 	/**
 	 * 
+	 * Description : HQL分页查询
+	 * 
+	 * @param Page
+	 *            分页对象
+	 * @param hql
+	 *            HQL语句
+	 * @param values
+	 *            map对象参数值
+	 * @return
+	 * 
+	 */
+	public Page<T> queryPage(final Page<T> page, final String hql, final Map<String, Object> values);
+
+	/**
+	 * 
 	 * Description : 按Criteria分页查询
 	 *
 	 * @param page
@@ -33,5 +48,40 @@ public interface PageGenericDao<T, PK extends Serializable> extends GenericDao<T
 	 */
 	public Page<T> queryPage(final Page<T> page, final Criterion... criterions);
 
-	
+	/**
+	 * 
+	 * Description : 执行count查询获得本次Hql查询所能获得的对象总数
+	 *
+	 * @param hql
+	 *            HQL语句
+	 * @param values
+	 *            查询值
+	 * @return
+	 *
+	 *//*
+	public int countHqlResult(final String hql, final Object... values);
+
+	*//**
+	 * 
+	 * Description : 执行count查询获得本次Hql查询所能获得的对象总数
+	 *
+	 * @param hql
+	 *            HQL语句
+	 * @param values
+	 *            map对象查询值
+	 * @return
+	 *
+	 *//*
+	public int countHqlResult(final String hql, final Map<String, Object> values);*/
+
+	/**
+	 * 
+	 * Description : 执行count查询获得本次Criteria查询所能获得的对象总数
+	 *
+	 * @param c
+	 *            Criteria对象
+	 * @return
+	 *
+	 *//*
+	public int countCriteriaResult(final Criteria c);*/
 }
