@@ -25,8 +25,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
 import com.genie.dao.DaoException;
-import com.genie.dao.Row;
-import com.genie.dao.RowGenericDao;
+import com.genie.dao.Page;
+import com.genie.dao.Page;
 import com.genie.dao.ReflectionUtils;
 
 /*author:Genie
@@ -107,7 +107,7 @@ public class RowHibernateGenericDaoImpl<T, PK extends Serializable> extends Hibe
 
 
 	@Override
-	public Row<T> queryPage(Row<T> row, String hql, Object... values) {
+	public Page<T> queryPage(Page<T> row, String hql, Object... values) {
 		Assert.notNull(row, "row不能为空");
 		Query q = createQuery(hql, values);
 		int totalCount = countByHql(hql, values);
@@ -120,7 +120,7 @@ public class RowHibernateGenericDaoImpl<T, PK extends Serializable> extends Hibe
 	}
 
 	@Override
-	public Row<T> queryPage(Row<T> row, Criterion... criterions) {
+	public Page<T> queryPage(Page<T> row, Criterion... criterions) {
 		Assert.notNull(row, "row不能为空");
 		
 		Criteria criteria = getSession().createCriteria(entityClass);
