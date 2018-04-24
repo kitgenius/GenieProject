@@ -218,7 +218,7 @@ public class ReflectionUtils {
 	 * @param propertyName 要提取的属性名.
 	 */
 	@SuppressWarnings("unchecked")
-	public static List convertElementPropertyToList(final Collection collection, final String propertyName) {
+	/*public static List convertElementPropertyToList(final Collection collection, final String propertyName) {
 		List list = new ArrayList();
 
 		try {
@@ -230,7 +230,7 @@ public class ReflectionUtils {
 		}
 
 		return list;
-	}
+	}*/
 
 	/**
 	 * 提取集合中的对象的属性(通过getter函数), 组合成由分割符分隔的字符串.
@@ -239,12 +239,12 @@ public class ReflectionUtils {
 	 * @param propertyName 要提取的属性名.
 	 * @param separator 分隔符.
 	 */
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	public static String convertElementPropertyToString(final Collection collection, final String propertyName,
 			final String separator) {
 		List list = convertElementPropertyToList(collection, propertyName);
 		return StringUtils.join(list, separator);
-	}
+	}*/
 
 	/**
 	 * 转换字符串类型到clazz的property类型的值.
@@ -253,7 +253,7 @@ public class ReflectionUtils {
 	 * @param clazz 提供类型信息的Class
 	 * @param propertyName 提供类型信息的Class的属性.
 	 */
-	public static Object convertValue(Object value, Class<?> toType) {
+	/*public static Object convertValue(Object value, Class<?> toType) {
 		try {
 			DateConverter dc = new DateConverter();
 			dc.setUseLocaleFormat(true);
@@ -263,7 +263,7 @@ public class ReflectionUtils {
 		} catch (Exception e) {
 			throw convertReflectionExceptionToUnchecked(e);
 		}
-	}
+	}*/
 
 	/**
 	 * 
