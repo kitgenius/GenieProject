@@ -85,6 +85,7 @@ public class ManagerUser implements java.io.Serializable {
 			this.role = new java.util.HashSet<Role>();
 		if (!this.role.contains(newRole)) {
 			this.role.add(newRole);
+			newRole.addMan(this);
 		}
 	}
 
@@ -98,6 +99,7 @@ public class ManagerUser implements java.io.Serializable {
 		if (this.role != null)
 			if (this.role.contains(oldRole)) {
 				this.role.remove(oldRole);
+				oldRole.removeLogin(this);
 			}
 	}
 
