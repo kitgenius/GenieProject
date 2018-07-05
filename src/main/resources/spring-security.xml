@@ -30,7 +30,7 @@
         <!-- <remember-me /> -->
         <!-- 在用户端保存cookie，不安全  结束-->
         
-		<form-login login-page="/login.html"
+		<form-login login-page="/html/login.html"
 			username-parameter="username" password-parameter="password" login-processing-url="/login/login.do" default-target-url="/login/index.do" />
 		<session-management>
 			<concurrency-control max-sessions="1"
@@ -41,7 +41,7 @@
 	</http>
 
 	<beans:bean id="myFilter"
-		class="com.genie.security.MyFilterSecurityInterceptor	">
+		class="com.genie.security.MyFilterSecurityInterceptor">
 		<beans:property name="authenticationManager" ref="authenticationManager"></beans:property>
 		<beans:property name="accessDecisionManager" ref="AccessDecisionManager"></beans:property>
 		<beans:property name="securityMetadataSource" ref="SecurityMetadataSource"></beans:property>
