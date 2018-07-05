@@ -15,8 +15,13 @@ import org.springframework.security.access.intercept.InterceptorStatusToken;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 
-/*author:Genie
- *date:2017年12月16日
+/**
+ * author:Genie
+ * date:2017年12月16日
+ * 本类用于用户访问url时对用户进行鉴权。
+ * 其中会调用FilterInvocationSecurityMetadataSource的getAttributes方法来获取被拦截url所需的全部权限；
+ * 再调用授权管理器AccessDecisionManager，这个授权管理器会通过spring的全局缓存SecurityContextHolder获取用户的权限信息，用户登陆时权限信息保存在全局缓存
+ * 还会获取被拦截的url和被拦截url所需的全部权限，然后根据所配的策略（有：一票决定，一票否定，少数服从多数等），如果权限足够，则返回，权限不够则报错并调用权限不足页面。 
 **/
 public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
 

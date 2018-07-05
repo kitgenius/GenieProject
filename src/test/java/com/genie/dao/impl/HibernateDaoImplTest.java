@@ -20,7 +20,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.genie.dao.HibernateDaoOld;
+import com.genie.dao.HibernateDao;
 import com.genie.entity.ManagerUser;
 import com.genie.entity.Role;
 
@@ -35,7 +35,7 @@ import com.genie.entity.Role;
 public class HibernateDaoImplTest {
 	
 	@Autowired
-	HibernateDaoOld hibernateDao;
+	HibernateDao hibernateDao;
 	
 	@Test
 	public void findAllTest(){
@@ -67,7 +67,7 @@ public class HibernateDaoImplTest {
 	public void queryByExampleTest(){
 		ManagerUser login = new ManagerUser();
 		login.setUsername("genie");
-		List<ManagerUser> LoginList = hibernateDao.queryByExample(ManagerUser.class, login);
+		List<ManagerUser> LoginList = hibernateDao.findByExample(ManagerUser.class, login);
 		assertEquals("genie",LoginList.get(0).getPassword());
 	}
 	
@@ -78,7 +78,7 @@ public class HibernateDaoImplTest {
 			System.out.println("login name is : " + login.getUsername());
 		}
 		System.out.println("another test");
-		List<ManagerUser> loginList2 = hibernateDao.findByProperty(ManagerUser.class, Restrictions.eq("username", "genie2"));
+		List<ManagerUser> loginList2 = hibernateDao.findByProperty(ManagerUser.class, Restrictions.eq("username", "genie"));
 		for(ManagerUser login2:loginList2){
 			System.out.println("login name is : " + login2.getUsername());
 			System.out.println("login password is : " + login2.getPassword());

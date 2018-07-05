@@ -19,19 +19,19 @@ public class MyAspect {
 	
 	@Before("myPointcut()")
 	public void beforeExe(){
-		System.out.println("调用方法之前执行");
+		System.out.println("DAO调用findAll方法之前执行");
 	}
 	
 	
 	
 	@AfterReturning("myPointcut()")
 	public void afterReturnExe(){
-		System.out.println("调用方法并返回后执行");
+		System.out.println("DAO调用findAll方法并返回后执行");
 	}
 	
 	//After在AfterReturning之前执行
 	@After("myPointcut()")
 	public void afterExe(){
-		System.out.println("调用方法之后(或异常)执行");
+		System.out.println("DAO调用findAll方法之后(或异常)执行");
 	}
 }

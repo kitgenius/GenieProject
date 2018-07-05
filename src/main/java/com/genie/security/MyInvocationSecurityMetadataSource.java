@@ -15,17 +15,20 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.test.web.servlet.htmlunit.UrlRegexRequestMatcher;
 
-import com.genie.dao.HibernateDaoOld;
+import com.genie.dao.HibernateDao;
 import com.genie.entity.Auth;
 import com.genie.entity.Role;
+import com.genie.service.AuthService;
 
-/*author:Genie
- *date:2018年2月27日
+/**
+ * author:Genie
+ * ate:2018年2月27日
+ * 用户的权限信息，注入SecurityInterceptor拦截器，拦截器通过getAttributes方法来获取被拦截url所需的全部权限
 **/
 public class MyInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
 	@Autowired
-	private HibernateDaoOld hibernateDao;//后续要修改成service
+	private AuthService authService;
 	
 	/*private static Map<String, Collection<ConfigAttribute>> resourceMap = null;*/
 	
@@ -38,10 +41,10 @@ public class MyInvocationSecurityMetadataSource implements FilterInvocationSecur
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 		//参数是要访问的url，返回这个url对应的所有权限（或角色）
 		String requestUrl = ((FilterInvocation)object).getRequestUrl();//获取请求的url
-		System.out.println("用户访问资源 ： " + requestUrl);//临时调试
+		System.out.println("MyInvocationSecurityMetadataSource获取访问资源所需权限，用户正在访问资源 ： " + requestUrl);//临时调试
 		
 		//查找所有url对应的角色
-		List<Auth> auths = hibernateDao.findAll(Auth.class);
+		List<Auth> auths = authService.findAll();
 		
 		//根据角色设置相应的属性，返回。
 		Collection<ConfigAttribute> atts = new ArrayList<ConfigAttribute>();
@@ -50,12 +53,12 @@ public class MyInvocationSecurityMetadataSource implements FilterInvocationSecur
 			System.out.println(requestUrl + " 与 " + auth.getAuthPath() + "的匹配结果：" + requestUrl.matches(auth.getAuthPath()));
 			//System.out.println(requestUrl + " 与 " + auth.getAuthPath() + "的匹配结果：" + Pattern.matches(auth.getAuthPath(), requestUrl));
 			if(requestUrl.matches(auth.getAuthPath())){//请求的url能匹配上权限的url则将对应的角色设置到属性，最后返回
-				System.out.println("权限表有对应的角色具备权限");
+				System.out.println("MyInvocationSecurityMetadataSource权限表有对应的角色具备权限");
 				List<Role> roles = (List<Role>) auth.getRole();
 				System.out.println("roles size : " + roles.size());
 				for(Role role:roles){
 					String roleNameStr = role.getRoleName();
-					System.out.println("有权限访问该资源的角色名 ：" + roleNameStr);
+					System.out.println("MyInvocationSecurityMetadataSource有权限访问该资源的角色名 ：" + roleNameStr);
 					ConfigAttribute ca = new SecurityConfig(roleNameStr);
 					atts.add(ca);
 				}

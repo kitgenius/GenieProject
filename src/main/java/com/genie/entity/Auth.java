@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -24,20 +26,21 @@ public class Auth implements java.io.Serializable {
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public int id;
+	private int id;
 	/** 权限名称 */
 	@Column(name="authName", nullable=false)
-	public java.lang.String authName;
+	private java.lang.String authName;
 	/** 访问路径，正则表达式 */
 	@Column(name="authPath", nullable=false)
-	public java.lang.String authPath;
+	private java.lang.String authPath;
 	/** 描述 */
 	@Column(name="description")
-	public java.lang.String description;
+	private java.lang.String description;
 
 	/** 角色 */
 	@ManyToMany(targetEntity = com.genie.entity.Role.class)
-	public java.util.Collection<Role> role;
+	@JoinTable(name="t_role_auth",joinColumns=@JoinColumn(name="authId"),inverseJoinColumns=@JoinColumn(name="roleId"))
+	private java.util.Collection<Role> role;
 
 	/**
 	 * Empty constructor which is required by Hibernate

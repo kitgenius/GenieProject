@@ -11,8 +11,10 @@ import org.springframework.security.authentication.InsufficientAuthenticationExc
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
-/*author:Genie
- *date:2018年2月28日
+/**
+ * author:Genie
+ * date:2018年2月28日
+ * 接入允许决策，通过decide方法决策，允许接入则返回，否则报错。
 **/
 public class MyAccessDecisionManager implements AccessDecisionManager {
 

@@ -30,7 +30,7 @@
         <!-- <remember-me /> -->
         <!-- 在用户端保存cookie，不安全  结束-->
         
-		<form-login login-page="/html/login.html"
+		<form-login login-page="/login.html"
 			username-parameter="username" password-parameter="password" login-processing-url="/login/login.do" default-target-url="/login/index.do" />
 		<session-management>
 			<concurrency-control max-sessions="1"
@@ -43,19 +43,19 @@
 	<beans:bean id="myFilter"
 		class="com.genie.security.MyFilterSecurityInterceptor	">
 		<beans:property name="authenticationManager" ref="authenticationManager"></beans:property>
-		<beans:property name="accessDecisionManager" ref="myAccessDecisionManager"></beans:property>
-		<beans:property name="securityMetadataSource" ref="securityMetadataSource"></beans:property>
+		<beans:property name="accessDecisionManager" ref="AccessDecisionManager"></beans:property>
+		<beans:property name="securityMetadataSource" ref="SecurityMetadataSource"></beans:property>
 	</beans:bean>
 
 	<authentication-manager alias="authenticationManager">
-		<authentication-provider user-service-ref="myUserDetailsService">
+		<authentication-provider user-service-ref="UserDetailsService">
 			<!-- <password-encoder hash="md5"></password-encoder> -->
 		</authentication-provider>
 	</authentication-manager>
 
-	<beans:bean id="myUserDetailsService" class="com.genie.security.MyUserDetailsService"></beans:bean>
-	<beans:bean id="myAccessDecisionManager" class="com.genie.security.MyAccessDecisionManager"></beans:bean>
-	<beans:bean id="securityMetadataSource"
+	<beans:bean id="UserDetailsService" class="com.genie.security.MyUserDetailsService"></beans:bean>
+	<beans:bean id="AccessDecisionManager" class="com.genie.security.MyAccessDecisionManager"></beans:bean>
+	<beans:bean id="SecurityMetadataSource"
 		class="com.genie.security.MyInvocationSecurityMetadataSource"></beans:bean>
     
     <!-- 读库方式配置验证、授权  结束-->

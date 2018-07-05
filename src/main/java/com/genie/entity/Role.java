@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -25,20 +27,22 @@ public class Role implements java.io.Serializable {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public int id;
+	private int id;
 	/** 角色名称 */
 	@Column(name = "roleName", nullable = false)
-	public java.lang.String roleName;
+	private java.lang.String roleName;
 	/** 角色描述 */
 	@Column(name = "description")
-	public java.lang.String description;
+	private java.lang.String description;
 
 	/** 授权，按路径授权 */
 	@ManyToMany(targetEntity = com.genie.entity.Auth.class, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	public java.util.Collection<Auth> auth;
+	@JoinTable(name="t_role_auth",joinColumns=@JoinColumn(name="roleId"),inverseJoinColumns=@JoinColumn(name="authId"))
+	private java.util.Collection<Auth> auth;
 	/** 后台登陆账号 */
 	@ManyToMany(targetEntity = com.genie.entity.ManagerUser.class)
-	public java.util.Collection<ManagerUser> managerUser;
+	@JoinTable(name="t_manageruser_role",joinColumns=@JoinColumn(name="roleId"),inverseJoinColumns=@JoinColumn(name="managerUserId"))
+	private java.util.Collection<ManagerUser> managerUser;
 
 	/**
 	 * Empty constructor which is required by Hibernate
@@ -121,7 +125,7 @@ public class Role implements java.io.Serializable {
 	/**
 	 * @pdGenerated default getter
 	 */
-	public java.util.Collection<ManagerUser> getmanagerUser() {
+	public java.util.Collection<ManagerUser> getManagerUser() {
 		if (managerUser == null)
 			managerUser = new java.util.HashSet<ManagerUser>();
 		return managerUser;
@@ -140,7 +144,7 @@ public class Role implements java.io.Serializable {
 	 * @pdGenerated default setter
 	 * @param newmanagerUser
 	 */
-	public void setmanagerUser(java.util.Collection<ManagerUser> newmanagerUser) {
+	public void setManagerUser(java.util.Collection<ManagerUser> newmanagerUser) {
 		// removeAllmanagerUser();
 		this.managerUser = newmanagerUser;
 	}
@@ -149,7 +153,7 @@ public class Role implements java.io.Serializable {
 	 * @pdGenerated default add
 	 * @param newmanagerUser
 	 */
-	public void addmanagerUser(ManagerUser newmanagerUser) {
+	public void addManagerUser(ManagerUser newmanagerUser) {
 		if (newmanagerUser == null)
 			return;
 		if (this.managerUser == null)
@@ -164,7 +168,7 @@ public class Role implements java.io.Serializable {
 	 * @pdGenerated default remove
 	 * @param oldmanagerUser
 	 */
-	public void removemanagerUser(ManagerUser oldmanagerUser) {
+	public void removeManagerUser(ManagerUser oldmanagerUser) {
 		if (oldmanagerUser == null)
 			return;
 		if (this.managerUser != null)
@@ -177,7 +181,7 @@ public class Role implements java.io.Serializable {
 	/**
 	 * @pdGenerated default removeAll
 	 */
-	public void removeAllmanagerUser() {
+	public void removeAllManagerUser() {
 		if (managerUser != null) {
 			ManagerUser oldmanagerUser;
 			for (java.util.Iterator iter = getIteratormanagerUser(); iter.hasNext();) {

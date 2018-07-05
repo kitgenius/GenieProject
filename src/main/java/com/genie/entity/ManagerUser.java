@@ -13,31 +13,34 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /** 后台用户登陆账号 */
 @Entity
-@Table(name="t_managerUser")
+@Table(name = "t_managerUser")
 public class ManagerUser implements java.io.Serializable {
 	/** id，主键 */
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public int id;
+	private int id;
 	/** 用户名 */
-	@Column(name = "username", nullable=false)
-	public java.lang.String username;
+	@Column(name = "username", nullable = false)
+	private java.lang.String username;
 	/** 密码 */
-	@Column(name = "username" , nullable=false)
-	public java.lang.String password;
+	@Column(name = "password", nullable = false)
+	private java.lang.String password;
 
 	/**
 	 * @pdRoleInfo migr=no name=Role assc=角色关联关系 coll=java.util.Collection
 	 *             impl=java.util.HashSet mult=0..*
 	 */
 	@ManyToMany(targetEntity = com.genie.entity.Role.class)
-	public java.util.Collection<Role> role;
+	@JoinTable(name = "t_manageruser_role", joinColumns = @JoinColumn(name = "managerUserId"), inverseJoinColumns = @JoinColumn(name = "roleId"))
+	private java.util.Collection<Role> role;
 
 	/**
 	 * Empty constructor which is required by Hibernate
@@ -85,7 +88,7 @@ public class ManagerUser implements java.io.Serializable {
 			this.role = new java.util.HashSet<Role>();
 		if (!this.role.contains(newRole)) {
 			this.role.add(newRole);
-			newRole.addMan(this);
+			newRole.addManagerUser(this);
 		}
 	}
 
@@ -99,7 +102,7 @@ public class ManagerUser implements java.io.Serializable {
 		if (this.role != null)
 			if (this.role.contains(oldRole)) {
 				this.role.remove(oldRole);
-				oldRole.removeLogin(this);
+				oldRole.removeManagerUser(this);
 			}
 	}
 

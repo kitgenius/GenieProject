@@ -38,7 +38,7 @@
 			</list>
 		</property> -->
 		<!-- 扫描hibernate注解配置的entity -->
-		<property name="packagesToScan" value="entity"></property>
+		<property name="packagesToScan" value="com.genie.entity"></property>
 	</bean>
 
 	<!-- 事务管理器 -->
