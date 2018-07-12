@@ -54,7 +54,7 @@
 	</filter-mapping> -->
 	
 	<!-- Spring Security -->
-	<filter>
+	<!-- <filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy
 		</filter-class>
@@ -63,7 +63,7 @@
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+	</filter-mapping> -->
 
 	<!-- spring监听器，监听servletContext，读取contextConfigLocation的配置信息 -->
 	<listener>
@@ -74,10 +74,20 @@
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
 
+	<!-- CXF -->
+	<servlet>
+		<servlet-name>cxf</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>cxf</servlet-name>
+		<url-pattern>/cxf/*</url-pattern>
+	</servlet-mapping>
 
 	<!-- springMVC调度器 -->
 	<servlet>
-		<servlet-name>webDispatcher</servlet-name>
+		<servlet-name>springMVC</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
@@ -87,7 +97,7 @@
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>webDispatcher</servlet-name>
+		<servlet-name>springMVC</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
@@ -98,6 +108,7 @@
 		<url-pattern>*.html</url-pattern>
 	</servlet-mapping> -->
 
+	
 
 
 	<session-config>
