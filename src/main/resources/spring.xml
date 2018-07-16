@@ -36,9 +36,11 @@
 	<bean id="cxf" class="org.apache.cxf.bus.spring.SpringBus" destroy-method="shutdown"/>
 	<jaxws:endpoint id="cxfDemoServiceEndPoint" implementor="#cxfDemoService" address="/cxfDemoService" />
 	 -->
-	 
-	  <bean id="demo" class="com.genie.service.impl.CxfDemoServiceImpl" />
-<jaxws:endpoint id="demoService" implementor="#demo" address="/demo" />
+	 <bean id="cxf" class="org.apache.cxf.bus.spring.SpringBus" destroy-method="shutdown"/>
+
+	<bean id="demo" class="com.genie.service.impl.CxfDemoServiceImpl" />
+	<jaxws:endpoint id="demoService" implementor="#demo"
+		address="/demo" />
 	 
 	<!-- <aop:config>
 		切入点

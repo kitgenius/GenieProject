@@ -4,8 +4,18 @@
 	<ear-subdeployments-isolated>false</ear-subdeployments-isolated>
 
 	<deployment>
+		<!-- <dependencies>
+			Picket link configuration
+			<module name="org.picketlink" services="import" />
+			<module name="org.springframework.spring" export="true"
+				meta-inf="export" />
+			<module name="org.apache.cxf" export="true" />
+			<module name="org.apache.cxf.impl" export="true" />
+		</dependencies> -->
 		<exclude-subsystems>
+			<subsystem name="jaxrs" />
 			<subsystem name="webservices" />
+			<subsystem name="weld" />
 		</exclude-subsystems>
 		<exclusions>
 
@@ -23,6 +33,24 @@
 
 			<module name="org.apache.log4j" />
 
+			<!-- Exclude Version cxf of JBOSS -->
+			
+			<!-- Exclude JAVA EE of JBOSS (javax.ws..) => Add dependency javax.annotation -->
+			<!-- <module name="javaee.api" /> -->
+
+			<!-- Exclude RestEasy conflict (javax.ws.rs.ext.RunDelegate) -->
+			<!-- <module name="org.jboss.resteasy.resteasy-jackson-provider" /> -->
+
+			<!-- module name="org.apache.log4j" /> <module name="org.apache.commons.logging"/ -->
+			<!-- <module name="org.jboss.as.jaxrs" /> <module name="org.jboss.resteasy.resteasy-jaxrs" 
+				/> <module name="org.jboss.resteasy.resteasy-cdi" /> <module name="org.jboss.resteasy.jackson-provider" 
+				/> <module name="org.jboss.resteasy.resteasy-atom-provider" /> <module name="org.jboss.resteasy.resteasy-hibernatevalidator-provider" 
+				/> <module name="org.jboss.resteasy.resteasy-jaxb-provider" /> <module name="org.jboss.resteasy.resteasy-jettison-provider" 
+				/> <module name="org.jboss.resteasy.resteasy-jsapi" /> <module name="org.jboss.resteasy.resteasy-multipart-provider" 
+				/> <module name="org.jboss.resteasy.resteasy-yaml-provider" /> <module name="org.codehaus.jackson.jackson-core-asl" 
+				/> <module name="org.codehaus.jackson.jackson-jaxrs" /> <module name="org.codehaus.jackson.jackson-mapper-asl" 
+				/> <module name="org.codehaus.jackson.jackson-xc" /> <module name="org.codehaus.jettison" 
+				/> <module name="javax.ws.rs.api" /> -->
 		</exclusions>
 
 
