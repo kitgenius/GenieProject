@@ -13,9 +13,8 @@ import org.springframework.stereotype.Service;
 import com.genie.entity.CxfEntity;
 import com.genie.service.CxfDemoService;
 
-//@Component
-//@Service(value="cxfDemoService")
-@WebService(endpointInterface = "com.genie.service.CxfDemoService")
+@Service(value="cxfDemoService")
+@WebService(endpointInterface = "com.genie.service.CxfDemoService",serviceName="demoService",targetNamespace="http://127.0.0.1:8080",portName="demoPort")
 @SOAPBinding(style = Style.RPC)
 //@org.apache.cxf.interceptor.InInterceptors (interceptors = {"org.apache.cxf.transport.common.gzip.GZIPInInterceptor","org.apache.cxf.transport.common.gzip.GZIPOutInterceptor" })
 public class CxfDemoServiceImpl extends BaseService implements CxfDemoService {

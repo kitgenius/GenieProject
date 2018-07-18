@@ -26,6 +26,9 @@
 	<http auto-config="true" use-expressions="true">
 		<!-- <intercept-url pattern="/login/*" access="permitAll"/> -->
 		<!-- <intercept-url pattern="/**" access="isAuthenticated()"/> -->
+		<!-- 关闭csrf -->
+		<!-- <csrf disabled="true"/> -->
+		<!-- 关闭csrf 结束-->
 		<!-- 在用户端保存cookie，不安全 -->
         <!-- <remember-me /> -->
         <!-- 在用户端保存cookie，不安全  结束-->

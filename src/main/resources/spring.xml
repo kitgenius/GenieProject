@@ -32,14 +32,11 @@
 	<!-- spring aop事务管理 -->
 	<aop:aspectj-autoproxy />
 	<bean id="myaspect" class="com.genie.aspect.MyAspect"></bean>
-<!-- 
+    
+    <!-- cxf -->
 	<bean id="cxf" class="org.apache.cxf.bus.spring.SpringBus" destroy-method="shutdown"/>
-	<jaxws:endpoint id="cxfDemoServiceEndPoint" implementor="#cxfDemoService" address="/cxfDemoService" />
-	 -->
-	 <bean id="cxf" class="org.apache.cxf.bus.spring.SpringBus" destroy-method="shutdown"/>
-
-	<bean id="demo" class="com.genie.service.impl.CxfDemoServiceImpl" />
-	<jaxws:endpoint id="demoService" implementor="#demo"
+	<!-- <bean id="cxfDemoService" class="com.genie.service.impl.CxfDemoServiceImpl" /> -->
+	<jaxws:endpoint id="demoService" implementor="#cxfDemoService"
 		address="/demo" />
 	 
 	<!-- <aop:config>
