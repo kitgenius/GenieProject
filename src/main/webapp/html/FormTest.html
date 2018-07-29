@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>FormTest</title>
+<script type="text/javascript">
+	function submit() {
+	 	var form = new FormData(document.getElementById("FormTest"));
+		$.ajax({
+			//几个参数需要注意一下
+			type : "POST",//方法类型
+			dataType : "json",//预期服务器返回的数据类型
+			url : "/GenieProject/FormTest/test.do",//url
+			data : form,
+			headers : {header:token},
+			success : function(result) {
+				console.log(result);//打印服务端返回的数据(调试用)
+				if (result.resultCode == 200) {
+					alert("SUCCESS");
+				}else if (result.resultCode == 302){
+					alert("redirect");
+				}
+				;
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+</script>
+</head>
+<body>
+	<div>
+		<form id="FormTest" action="/GenieProject/FormTest/test.do" method="post">
+			<p>
+				<input type="text" name="username" value="username">
+			<p>
+				<input type="text" name="email" value="email">
+			<p>
+				<input type="text" name="telephone" value="telephone">
+			<p>
+				<input type="text" name="address" value="address">
+			<p>
+				<input type="submit" value="提交" onclick="submit()"> &nbsp;<input
+					type="reset" value="重置">
+		</form>
+	</div>
+</body>
+</html>

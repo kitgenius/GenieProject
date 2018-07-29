@@ -5,11 +5,13 @@ package com.genie.model;
  *status:标识请求是否成功
  *msg:状态原因说明
  *data:其他相关信息
+ *code:状态码，G200-成功，参考http状态码，G+http状态码
 **/
 public class ResponseModel {
 	boolean status;
 	String msg;
 	Object data;
+	String code;
 	public boolean getStatus() {
 		return status;
 	}
@@ -27,6 +29,12 @@ public class ResponseModel {
 	}
 	public void setData(Object data) {
 		this.data = data;
+	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	
