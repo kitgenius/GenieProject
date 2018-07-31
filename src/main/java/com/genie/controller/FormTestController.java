@@ -42,7 +42,7 @@ public class FormTestController {
 		
 		System.out.println(userInfoForm.getUsername());
 		
-		res.setData(userInfoForm.getUsername() + "数据已成功提交");
+		res.setData(userInfoForm);
 		res.setStatus(true);
 		res.setMsg("成功");
 		res.setCode("G200");
