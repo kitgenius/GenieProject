@@ -34,7 +34,7 @@
         <!-- 在用户端保存cookie，不安全  结束-->
         
 		<form-login login-page="/html/login.html"
-			username-parameter="username" password-parameter="password" login-processing-url="/login/login.do" default-target-url="/login/index.do" />
+			username-parameter="username" password-parameter="password" login-processing-url="/login/login.do" default-target-url="/login/success.do" authentication-failure-forward-url="/login/failure.do"/>
 		<session-management>
 			<concurrency-control max-sessions="1"
 				error-if-maximum-exceeded="false" />
