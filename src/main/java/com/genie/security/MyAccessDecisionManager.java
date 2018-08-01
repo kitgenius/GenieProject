@@ -14,7 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 /**
  * author:Genie
  * date:2018年2月28日
- * 接入允许决策，通过decide方法决策，允许接入则返回，否则报错。
+ * 接入允许决策，通过decide方法决策，允许接入则返回，否则抛出异常。
 **/
 public class MyAccessDecisionManager implements AccessDecisionManager {
 
