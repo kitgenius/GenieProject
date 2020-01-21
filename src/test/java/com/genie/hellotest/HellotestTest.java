@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import static org.junit.Assert.assertEquals;
 
 /*author:Genie
+ *测试用的
  *date:2017年9月11日
 **/
 @RunWith(SpringJUnit4ClassRunner.class)
