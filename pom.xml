@@ -17,7 +17,7 @@
 		<project.maven.compiler>UTF-8</project.maven.compiler>
 		<spring.version>4.2.6.RELEASE</spring.version>
 		<spring.security.version>4.2.3.RELEASE</spring.security.version>
-		<hibernate.version>4.3.11.Final</hibernate.version>
+		<hibernate.version>5.4.24.Final</hibernate.version>
 		<jackson.version>2.6.4</jackson.version>
 		<cxf.version>3.2.5</cxf.version>
 	</properties>
