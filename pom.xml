@@ -15,7 +15,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<!-- 编译时编码 -->
 		<project.maven.compiler>UTF-8</project.maven.compiler>
-		<spring.version>4.2.6.RELEASE</spring.version>
+		<spring.version>6.0.0</spring.version>
 		<spring.security.version>4.2.3.RELEASE</spring.security.version>
 		<hibernate.version>4.3.11.Final</hibernate.version>
 		<jackson.version>2.6.4</jackson.version>
